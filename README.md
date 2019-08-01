@@ -95,7 +95,7 @@ public StrategyManagerFactoryBean<HelloStrategy, People> helloStrategyManager(){
 }
 ```
 
-> 目前来看不支持xml配置，因为有泛型以及函数入参，都sb时代了，谁还xml
+> 目前来看不支持xml配置，因为有函数入参，都sb时代了，谁还xml
 
 由下面的注入可以发现，Spring忽略了泛型，因此在StrategyManagerFactoryBean增加了一个build方法，简化配置
 ```
