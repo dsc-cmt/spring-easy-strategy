@@ -31,6 +31,14 @@ price = strategy.calculate(...)
 ## 如何使用
 在这个框架中，每个接口的策略实现都会存在一个identifyCode对应，该identifyCode通过注解以及自定义逻辑生成
 
+0. 你的策略接口
+```
+public interface HelloStrategy {
+
+    String hello();
+}
+```
+
 1. 实现自定义注解
 考虑到有些策略是通过多个属性进行匹配的，所以这边支持自定义注解绑定策略
 ```
@@ -45,6 +53,18 @@ public @interface People {
 
 }
 ```
+
+将该注解注解到策略实现类上去
+```
+@People(district = "chinese",gender = GenderEnum.FEMALE)
+public class ChineseGirlHelloStrategy implements HelloStrategy {
+    @Override
+    public String hello() {
+        return "你好";
+    }
+}
+```
+
 如果只有一个属性，直接使用自带的StrategyIdentifier注解即可
 
 2. 配置FactoryBean
