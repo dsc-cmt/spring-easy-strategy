@@ -55,6 +55,9 @@ public @interface People {
 }
 ```
 
+> 注意@Component元注解
+
+
 将该注解注解到策略实现类上去
 ```
 @People(district = "chinese",gender = GenderEnum.FEMALE)
