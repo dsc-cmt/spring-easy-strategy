@@ -27,6 +27,9 @@ price = strategy.calculate(...)
 1. 减少if/else，让我们的逻辑更加内聚
 2. 符合开闭原则，新增逻辑时，主流程代码不需要改动，只要增加新的策略即可
 
+## 引入
+1. 直接复制到你的项目
+2. 通过`mvn clean install (deploy) -Dmaven.test.skip=true` 安装到本地/远程仓库然后引入你的项目
 
 ## 如何使用
 在这个框架中，每个接口的策略实现都会存在一个identifyCode对应，该identifyCode通过注解以及自定义逻辑生成
