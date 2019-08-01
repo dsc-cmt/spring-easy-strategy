@@ -91,10 +91,10 @@ StrategyManagerFactoryBean配置有三个
 |identifyCodeGetter | 从注解提取identifyCode的逻辑  |
 
 
-由下面的注入可以发现，Spring忽略了泛型，增加了一个构件方法，上述配置可以简化为
+由下面的注入可以发现，Spring忽略了泛型，因此在StrategyManagerFactoryBean增加了一个build方法，简化配置
 ```
 @Bean
-public StrategyManagerFactoryBean calculatePriceStrategyManager2(){
+public StrategyManagerFactoryBean calculatePriceStrategyManager(){
     return StrategyManagerFactoryBean.build(CalculatePriceStrategy.class,StrategyIdentifier.class,(a)->a.identifyCode());
 }
 ```

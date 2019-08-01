@@ -30,9 +30,9 @@ public class StrategyManagerFactoryBean<T,V extends Annotation> implements Facto
 
     @Override
     public StrategyManager<T> getObject() throws Exception {
-        Assert.notNull(strategyClass,"strategyClass can not be null");
-        Assert.notNull(strategyAnnotationClass,"strategyAnnotationClass can not be null");
-        Assert.notNull(identifyCodeGetter,"identifyCodeGetter can not be null");
+        Assert.notNull(strategyClass,"strategyClass must not be null");
+        Assert.notNull(strategyAnnotationClass,"strategyAnnotationClass must not be null");
+        Assert.notNull(identifyCodeGetter,"identifyCodeGetter must not be null");
         return new StrategyManager<T>() {
             @Override
             public T getStrategy(String identifyCode) {
