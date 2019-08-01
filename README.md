@@ -35,7 +35,7 @@ public StrategyManagerFactoryBean<HelloStrategy, People> helloStrategyManager(){
 ```
 StrategyManagerFactoryBean配置有三个  
 
-|||
+|参数|作用|
 |---|---|
 |strategyClass | 策略类  |
 |strategyAnnotationClass|  策略注解类  |
