@@ -1,4 +1,4 @@
-package com.scj.saber.stratrgy.test.rewardpoints;
+package com.scj.saber.stratrgy.test.demo.rewardpoints;
 
 import com.scj.saber.strategy.StrategyIdentifier;
 

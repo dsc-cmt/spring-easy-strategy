@@ -1,7 +1,7 @@
-package com.scj.saber.stratrgy.test;
+package com.scj.saber.stratrgy.test.demo;
 
-import com.scj.saber.stratrgy.test.service.CreateOrderRequest;
-import com.scj.saber.stratrgy.test.service.OrderService;
+import com.scj.saber.stratrgy.test.demo.service.CreateOrderRequest;
+import com.scj.saber.stratrgy.test.demo.service.OrderService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

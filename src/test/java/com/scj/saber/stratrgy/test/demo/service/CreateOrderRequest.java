@@ -1,6 +1,6 @@
-package com.scj.saber.stratrgy.test.service;
+package com.scj.saber.stratrgy.test.demo.service;
 
-import com.scj.saber.stratrgy.test.UserLevel;
+import com.scj.saber.stratrgy.test.demo.UserLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

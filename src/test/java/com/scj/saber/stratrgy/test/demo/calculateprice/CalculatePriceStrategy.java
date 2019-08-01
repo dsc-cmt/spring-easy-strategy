@@ -1,4 +1,4 @@
-package com.scj.saber.stratrgy.test.calculateprice;
+package com.scj.saber.stratrgy.test.demo.calculateprice;
 
 /**
  * 计算价格策略

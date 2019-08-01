@@ -1,4 +1,4 @@
-package com.scj.saber.stratrgy.test.calculateprice;
+package com.scj.saber.stratrgy.test.demo.calculateprice;
 
 import com.scj.saber.strategy.StrategyIdentifier;
 

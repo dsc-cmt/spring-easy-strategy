@@ -1,4 +1,4 @@
-package com.scj.saber.strategy;
+package com.scj.saber.stratrgy.test.function.common;
 
 import org.springframework.stereotype.Component;
 
@@ -8,20 +8,16 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 策略类注解
- * 如果策略标识符只有一个直接使用该注解就行
  * @author shengchaojie
- * @date 2019-07-30
+ * @date 2019-08-01
  **/
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Component
-public @interface StrategyIdentifier {
+public @interface People {
 
-    /**
-     * 策略唯一标识符
-     * @return
-     */
-    String identifyCode();
+    String district();
+
+    GenderEnum gender();
 
 }

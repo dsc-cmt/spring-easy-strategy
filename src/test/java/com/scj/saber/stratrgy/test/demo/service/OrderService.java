@@ -1,9 +1,9 @@
-package com.scj.saber.stratrgy.test.service;
+package com.scj.saber.stratrgy.test.demo.service;
 
 import com.scj.saber.strategy.StrategyManager;
-import com.scj.saber.stratrgy.test.ProductTypeEnum;
-import com.scj.saber.stratrgy.test.calculateprice.CalculatePriceStrategy;
-import com.scj.saber.stratrgy.test.rewardpoints.PointsRewardStrategy;
+import com.scj.saber.stratrgy.test.demo.ProductTypeEnum;
+import com.scj.saber.stratrgy.test.demo.calculateprice.CalculatePriceStrategy;
+import com.scj.saber.stratrgy.test.demo.rewardpoints.PointsRewardStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

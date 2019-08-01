@@ -8,4 +8,6 @@ public interface StrategyManager<T> {
 
     T getStrategy(String identifyCode);
 
+    void register(String identifyCode,T strategy);
+
 }

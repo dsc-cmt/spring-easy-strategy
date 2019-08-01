@@ -1,7 +1,5 @@
 package com.scj.saber.strategy;
 
-import com.google.common.collect.HashBasedTable;
-import com.google.common.collect.Table;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.context.ApplicationContext;
@@ -9,33 +7,52 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.util.Assert;
 
+import java.lang.annotation.Annotation;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
 
 /**
  * @author shengchaojie
  * @date 2019-07-30
  **/
-public class StrategyManagerFactoryBean<T> implements FactoryBean<StrategyManager>, ApplicationContextAware {
+public class StrategyManagerFactoryBean<T,V extends Annotation> implements FactoryBean<StrategyManager>, ApplicationContextAware {
 
     private Class<T> strategyClass;
 
-    private Table<Class<T>,String,T> strategyTable = HashBasedTable.create();
+    private Class<V> strategyAnnotationClass;
+
+    private Function<V,String> identifyCodeGetter;
+
+    private Map<String,T> strategyTable = new HashMap<>();
 
     @Override
     public StrategyManager<T> getObject() throws Exception {
         return new StrategyManager<T>() {
             @Override
             public T getStrategy(String identifyCode) {
-                T obj = strategyTable.get(strategyClass,identifyCode);
-                Assert.notNull(obj,"查找"+ strategyClass.getName() +"策略"+ identifyCode +"失败");
-                return obj;
+                return strategyTable.get(identifyCode);
+            }
+
+            @Override
+            public void register(String identifyCode, T strategy) {
+                strategyTable.put(identifyCode,strategy);
             }
         };
     }
 
     public void setStrategyClass(Class<T> strategyClass) {
         this.strategyClass = strategyClass;
+    }
+
+    public void setStrategyAnnotationClass(Class<V> strategyAnnotationClass) {
+        this.strategyAnnotationClass = strategyAnnotationClass;
+    }
+
+    public void setIdentifyCodeGetter(Function<V, String> identifyCodeGetter) {
+        this.identifyCodeGetter = identifyCodeGetter;
     }
 
     @Override
@@ -50,12 +67,12 @@ public class StrategyManagerFactoryBean<T> implements FactoryBean<StrategyManage
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        String[] names = applicationContext.getBeanNamesForType(strategyClass);
+        String names[] = applicationContext.getBeanNamesForType(strategyClass);
         Arrays.stream(names).forEach(name->{
             T object = applicationContext.getBean(name,strategyClass);
-            StrategyIdentifier identifier = AnnotationUtils.getAnnotation(object.getClass(),StrategyIdentifier.class);
+            V identifier = AnnotationUtils.getAnnotation(object.getClass(),strategyAnnotationClass);
             if(Objects.nonNull(identifier)){
-                strategyTable.put(strategyClass,identifier.identifyCode(),object);
+                strategyTable.put(identifyCodeGetter.apply(identifier),object);
             }
         });
     }

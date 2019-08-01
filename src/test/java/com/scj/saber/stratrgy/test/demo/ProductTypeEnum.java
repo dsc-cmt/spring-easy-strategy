@@ -1,4 +1,4 @@
-package com.scj.saber.stratrgy.test;
+package com.scj.saber.stratrgy.test.demo;
 
 /**
  * @author shengchaojie
