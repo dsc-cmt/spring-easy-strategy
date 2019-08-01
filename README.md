@@ -1,7 +1,7 @@
 ## 介绍
 spring-strategy-tool 是一个在spring环境下方便进行策略模式开发的工具类。  
 在业务开发使用策略模式中，发现策略的注册以及获取逻辑是一个重复的功能，所以设计该工具类方便开发。  
-主要原理是利用spring的FactoryBean针对每个接口策略生成一个StrategyManger Bean。  
+主要原理是利用spring的FactoryBean针对每个接口T策略生成一个StrategyManger<T> Bean。  
 
 ## 策略模式？
 策略模式绝对是我们写业务代码中用到最多的设计模式之一。  
