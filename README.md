@@ -39,7 +39,7 @@ public interface HelloStrategy {
 }
 ```
 
-1. 实现自定义注解
+1. 实现自定义注解  
 考虑到有些策略是通过多个属性进行匹配的，所以这边支持自定义注解绑定策略
 ```
 @Target({ElementType.TYPE})
