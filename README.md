@@ -110,6 +110,7 @@ helloStrategy.hello()
 ```
 
 5. 手动绑定策略
+
 StrategyManager接口有一个register方法用于手动绑定identifyCode和策略
 ```
 helloStrategyManager.register(Joiner.on(",").join("american", GenderEnum.FEMALE.name()),()->{
