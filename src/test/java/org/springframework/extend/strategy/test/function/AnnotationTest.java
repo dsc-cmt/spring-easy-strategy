@@ -1,9 +1,9 @@
-package org.springframework.extend.stratrgy.test.function;
+package org.springframework.extend.strategy.test.function;
 
 import com.google.common.base.Joiner;
 import org.springframework.extend.strategy.StrategyManager;
-import org.springframework.extend.stratrgy.test.function.common.GenderEnum;
-import org.springframework.extend.stratrgy.test.function.common.HelloStrategy;
+import org.springframework.extend.strategy.test.function.common.GenderEnum;
+import org.springframework.extend.strategy.test.function.common.HelloStrategy;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,7 +1,7 @@
-package org.springframework.extend.stratrgy.test.demo;
+package org.springframework.extend.strategy.test.demo;
 
-import org.springframework.extend.stratrgy.test.demo.service.CreateOrderRequest;
-import org.springframework.extend.stratrgy.test.demo.service.OrderService;
+import org.springframework.extend.strategy.test.demo.service.CreateOrderRequest;
+import org.springframework.extend.strategy.test.demo.service.OrderService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

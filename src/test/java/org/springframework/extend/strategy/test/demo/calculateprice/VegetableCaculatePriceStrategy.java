@@ -1,4 +1,4 @@
-package org.springframework.extend.stratrgy.test.demo.calculateprice;
+package org.springframework.extend.strategy.test.demo.calculateprice;
 
 import org.springframework.extend.strategy.StrategyIdentifier;
 

@@ -1,4 +1,4 @@
-package org.springframework.extend.stratrgy.test.demo.rewardpoints;
+package org.springframework.extend.strategy.test.demo.rewardpoints;
 
 /**
  * @author shengchaojie

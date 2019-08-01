@@ -1,6 +1,6 @@
-package org.springframework.extend.stratrgy.test.demo.service;
+package org.springframework.extend.strategy.test.demo.service;
 
-import org.springframework.extend.stratrgy.test.demo.UserLevel;
+import org.springframework.extend.strategy.test.demo.UserLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

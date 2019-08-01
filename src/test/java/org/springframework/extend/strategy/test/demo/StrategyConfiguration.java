@@ -1,9 +1,9 @@
-package org.springframework.extend.stratrgy.test.demo;
+package org.springframework.extend.strategy.test.demo;
 
 import org.springframework.extend.strategy.StrategyIdentifier;
 import org.springframework.extend.strategy.StrategyManagerFactoryBean;
-import org.springframework.extend.stratrgy.test.demo.calculateprice.CalculatePriceStrategy;
-import org.springframework.extend.stratrgy.test.demo.rewardpoints.PointsRewardStrategy;
+import org.springframework.extend.strategy.test.demo.calculateprice.CalculatePriceStrategy;
+import org.springframework.extend.strategy.test.demo.rewardpoints.PointsRewardStrategy;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

@@ -1,4 +1,4 @@
-package org.springframework.extend.stratrgy.test.demo;
+package org.springframework.extend.strategy.test.demo;
 
 /**
  * @author shengchaojie

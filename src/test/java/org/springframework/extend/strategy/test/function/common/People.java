@@ -1,4 +1,4 @@
-package org.springframework.extend.stratrgy.test.function.common;
+package org.springframework.extend.strategy.test.function.common;
 
 import org.springframework.stereotype.Component;
 

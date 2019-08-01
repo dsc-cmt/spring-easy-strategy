@@ -1,9 +1,9 @@
-package org.springframework.extend.stratrgy.test.demo.service;
+package org.springframework.extend.strategy.test.demo.service;
 
 import org.springframework.extend.strategy.StrategyManager;
-import org.springframework.extend.stratrgy.test.demo.ProductTypeEnum;
-import org.springframework.extend.stratrgy.test.demo.calculateprice.CalculatePriceStrategy;
-import org.springframework.extend.stratrgy.test.demo.rewardpoints.PointsRewardStrategy;
+import org.springframework.extend.strategy.test.demo.ProductTypeEnum;
+import org.springframework.extend.strategy.test.demo.calculateprice.CalculatePriceStrategy;
+import org.springframework.extend.strategy.test.demo.rewardpoints.PointsRewardStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
