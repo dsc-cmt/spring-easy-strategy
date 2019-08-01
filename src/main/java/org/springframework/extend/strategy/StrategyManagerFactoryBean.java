@@ -80,6 +80,15 @@ public class StrategyManagerFactoryBean<T,V extends Annotation> implements Facto
         });
     }
 
+    /**
+     * 方便创建FactoryBean的方法
+     * @param strategyClass
+     * @param strategyAnnotationClass
+     * @param identifyCodeGetter
+     * @param <T>
+     * @param <V>
+     * @return
+     */
     public static <T,V extends Annotation> StrategyManagerFactoryBean<T,V> build(Class<T> strategyClass, Class<V> strategyAnnotationClass ,Function<V,String> identifyCodeGetter) {
         StrategyManagerFactoryBean<T,V> factoryBean = new StrategyManagerFactoryBean<>();
         factoryBean.setStrategyClass(strategyClass);
