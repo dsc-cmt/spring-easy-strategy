@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
 public class StrategyConfiguration {
 
     @Bean
-    public StrategyManagerFactoryBean<CalculatePriceStrategy, StrategyIdentifier> calculatePriceStrategyManager(){
+    public StrategyManagerFactoryBean<CalculatePriceStrategy, StrategyIdentifier> calculatePriceStrategyManager2(){
         StrategyManagerFactoryBean<CalculatePriceStrategy, StrategyIdentifier> factoryBean = new StrategyManagerFactoryBean<>();
         factoryBean.setStrategyClass(CalculatePriceStrategy.class);
         factoryBean.setStrategyAnnotationClass(StrategyIdentifier.class);
@@ -24,7 +24,7 @@ public class StrategyConfiguration {
     }
 
     @Bean
-    public StrategyManagerFactoryBean<PointsRewardStrategy, StrategyIdentifier> pointsRewardStrategyManager(){
+    public StrategyManagerFactoryBean<PointsRewardStrategy, StrategyIdentifier> pointsRewardStrategyManager3(){
         StrategyManagerFactoryBean<PointsRewardStrategy, StrategyIdentifier> factoryBean = new StrategyManagerFactoryBean<>();
         factoryBean.setStrategyClass(PointsRewardStrategy.class);
         factoryBean.setStrategyAnnotationClass(StrategyIdentifier.class);

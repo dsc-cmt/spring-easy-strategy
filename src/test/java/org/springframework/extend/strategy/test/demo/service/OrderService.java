@@ -7,6 +7,7 @@ import org.springframework.extend.strategy.test.demo.rewardpoints.PointsRewardSt
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -16,12 +17,14 @@ import java.util.concurrent.ThreadLocalRandom;
 @Service
 public class OrderService {
 
-
-    @Autowired
+    /**
+     * 需要注意，spring容器注入会把泛型丢掉，所以必须通过beanname注入
+     */
+    @Resource(name = "calculatePriceStrategyManager2")
     private StrategyManager<CalculatePriceStrategy> calculatePriceStrategyManager;
 
 
-    @Autowired
+    @Resource(name = "pointsRewardStrategyManager3")
     private StrategyManager<PointsRewardStrategy> pointsRewardStrategyManager;
 
     /**

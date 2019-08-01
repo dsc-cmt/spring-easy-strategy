@@ -92,9 +92,15 @@ StrategyManagerFactoryBean配置有三个
 
 3. 注入StrategyManager
 ```
-@Autowired
+/**
+ * 需要注意，spring容器注入会把泛型丢掉，所以必须通过beanname注入
+ * 或者@bean的方法名和下面的属性名helloStrategyManager保持一致
+ */
+@Resource(name = "helloStrategyManager")
 private StrategyManager<HelloStrategy> helloStrategyManager;
 ```
+
+
 
 4. 使用
 ```

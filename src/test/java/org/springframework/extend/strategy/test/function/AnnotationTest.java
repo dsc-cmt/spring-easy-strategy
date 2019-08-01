@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import javax.annotation.Resource;
+
 /**
  * @author shengchaojie
  * @date 2019-08-01
@@ -19,7 +21,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration("classpath*:applicationContext.xml")
 public class AnnotationTest {
 
-    @Autowired
+    /**
+     * 需要注意，spring容器注入会把泛型丢掉，所以必须通过beanname注入
+     */
+    @Resource(name = "helloStrategyManager")
     private StrategyManager<HelloStrategy> helloStrategyManager;
 
     @Test
