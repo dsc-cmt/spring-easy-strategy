@@ -79,4 +79,13 @@ public class StrategyManagerFactoryBean<T,V extends Annotation> implements Facto
             }
         });
     }
+
+    public static <T,V extends Annotation> StrategyManagerFactoryBean<T,V> build(Class<T> strategyClass, Class<V> strategyAnnotationClass ,Function<V,String> identifyCodeGetter) {
+        StrategyManagerFactoryBean<T,V> factoryBean = new StrategyManagerFactoryBean<>();
+        factoryBean.setStrategyClass(strategyClass);
+        factoryBean.setStrategyAnnotationClass(strategyAnnotationClass);
+        factoryBean.setIdentifyCodeGetter(identifyCodeGetter);
+        return factoryBean;
+    }
+
 }
