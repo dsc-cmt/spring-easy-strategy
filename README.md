@@ -78,6 +78,9 @@ public StrategyManagerFactoryBean<HelloStrategy, People> helloStrategyManager(){
     return factoryBean;
 }
 ```
+
+> 目前来看不支持xml配置，因为有泛型以及函数入参，都sb时代了，谁还xml
+
 StrategyManagerFactoryBean配置有三个  
 
 |参数|作用|
