@@ -68,7 +68,16 @@ public class ChineseGirlHelloStrategy implements HelloStrategy {
 
 如果只有一个属性，直接使用自带的StrategyIdentifier注解即可
 
-2. 配置FactoryBean
+2. 配置StrategyManagerFactoryBean
+
+StrategyManagerFactoryBean配置有三个  
+
+|参数|作用|
+|---|---|
+|strategyClass | 策略类  |
+|strategyAnnotationClass|  策略注解类  |
+|identifyCodeGetter | 从注解提取identifyCode的逻辑  |
+
 ```
 @Bean
 public StrategyManagerFactoryBean<HelloStrategy, People> helloStrategyManager(){
@@ -81,15 +90,6 @@ public StrategyManagerFactoryBean<HelloStrategy, People> helloStrategyManager(){
 ```
 
 > 目前来看不支持xml配置，因为有泛型以及函数入参，都sb时代了，谁还xml
-
-StrategyManagerFactoryBean配置有三个  
-
-|参数|作用|
-|---|---|
-|strategyClass | 策略类  |
-|strategyAnnotationClass|  策略注解类  |
-|identifyCodeGetter | 从注解提取identifyCode的逻辑  |
-
 
 由下面的注入可以发现，Spring忽略了泛型，因此在StrategyManagerFactoryBean增加了一个build方法，简化配置
 ```
