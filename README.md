@@ -117,6 +117,3 @@ helloStrategyManager.register(Joiner.on(",").join("american", GenderEnum.FEMALE.
 ```
 
 > 完整示例见test
-
-## todo
-- 考虑将手动绑定单独抽出一个独立的FactoryBean出来，不想和注解模式耦合
