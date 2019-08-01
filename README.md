@@ -34,9 +34,12 @@ public StrategyManagerFactoryBean<HelloStrategy, People> helloStrategyManager(){
 }
 ```
 StrategyManagerFactoryBean配置有三个  
-strategyClass  策略类  
-strategyAnnotationClass  策略注解类  
-identifyCodeGetter  从注解提取identifyCode的逻辑  
+
+|||
+|---|---|
+|strategyClass | 策略类  |
+|strategyAnnotationClass|  策略注解类  |
+|identifyCodeGetter | 从注解提取identifyCode的逻辑  |
 
 
 3. 注入StrategyManager
@@ -58,6 +61,8 @@ helloStrategyManager.register(Joiner.on(",").join("american", GenderEnum.FEMALE.
     return "hello";
 });
 ```
+
+> 完整示例见test
 
 ## todo
 - 考虑将手动绑定单独抽出一个独立的FactoryBean出来，不想和注解模式耦合
