@@ -39,7 +39,8 @@ public interface HelloStrategy {
 }
 ```
 
-1. 实现自定义注解
+1. 实现自定义注解  
+
 考虑到有些策略是通过多个属性进行匹配的，所以这边支持自定义注解绑定策略
 ```
 @Target({ElementType.TYPE})
@@ -109,6 +110,7 @@ helloStrategy.hello()
 ```
 
 5. 手动绑定策略
+
 StrategyManager接口有一个register方法用于手动绑定identifyCode和策略
 ```
 helloStrategyManager.register(Joiner.on(",").join("american", GenderEnum.FEMALE.name()),()->{
@@ -117,6 +119,3 @@ helloStrategyManager.register(Joiner.on(",").join("american", GenderEnum.FEMALE.
 ```
 
 > 完整示例见test
-
-## todo
-- 考虑将手动绑定单独抽出一个独立的FactoryBean出来，不想和注解模式耦合
