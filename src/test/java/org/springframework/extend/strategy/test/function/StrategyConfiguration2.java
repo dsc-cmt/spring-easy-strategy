@@ -16,11 +16,12 @@ public class StrategyConfiguration2 {
 
     @Bean
     public StrategyManagerFactoryBean<HelloStrategy, People> helloStrategyManager(){
-        StrategyManagerFactoryBean<HelloStrategy, People> factoryBean = new StrategyManagerFactoryBean<>();
+        /*StrategyManagerFactoryBean<HelloStrategy, People> factoryBean = new StrategyManagerFactoryBean<>();
         factoryBean.setStrategyClass(HelloStrategy.class);
         factoryBean.setStrategyAnnotationClass(People.class);
         factoryBean.setIdentifyCodeGetter(a -> Joiner.on(",").join(a.district(),a.gender().name()));
-        return factoryBean;
+        return factoryBean;*/
+        return StrategyManagerFactoryBean.build(HelloStrategy.class,People.class,a -> Joiner.on(",").join(a.district(),a.gender().name()));
     }
 
 }

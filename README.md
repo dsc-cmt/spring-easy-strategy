@@ -94,8 +94,8 @@ public StrategyManagerFactoryBean<HelloStrategy, People> helloStrategyManager(){
 由下面的注入可以发现，Spring忽略了泛型，因此在StrategyManagerFactoryBean增加了一个build方法，简化配置
 ```
 @Bean
-public StrategyManagerFactoryBean calculatePriceStrategyManager(){
-    return StrategyManagerFactoryBean.build(CalculatePriceStrategy.class,StrategyIdentifier.class,(a)->a.identifyCode());
+public StrategyManagerFactoryBean<HelloStrategy, People> helloStrategyManager(){
+    return StrategyManagerFactoryBean.build(HelloStrategy.class,People.class,a -> Joiner.on(",").join(a.district(),a.gender().name()));
 }
 ```
 
