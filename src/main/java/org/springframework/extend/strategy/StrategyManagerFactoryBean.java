@@ -5,6 +5,7 @@ import org.springframework.beans.factory.FactoryBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.core.annotation.AnnotationUtils;
+import org.springframework.util.Assert;
 
 import java.lang.annotation.Annotation;
 import java.util.Arrays;
@@ -29,6 +30,9 @@ public class StrategyManagerFactoryBean<T,V extends Annotation> implements Facto
 
     @Override
     public StrategyManager<T> getObject() throws Exception {
+        Assert.notNull(strategyClass,"strategyClass can not be null");
+        Assert.notNull(strategyAnnotationClass,"strategyAnnotationClass can not be null");
+        Assert.notNull(identifyCodeGetter,"identifyCodeGetter can not be null");
         return new StrategyManager<T>() {
             @Override
             public T getStrategy(String identifyCode) {
