@@ -74,9 +74,9 @@ public class ChineseGirlHelloStrategy implements HelloStrategy {
 
 如果只有一个属性，直接使用自带的StrategyIdentifier注解即可
 
-2. 配置StrategyManagerFactoryBean
+2. 配置StrategyContainerFactoryBean
 
-StrategyManagerFactoryBean配置有三个  
+StrategyContainerFactoryBean配置有三个  
 
 |参数|作用|
 |---|---|
@@ -86,8 +86,8 @@ StrategyManagerFactoryBean配置有三个
 
 ```
 @Bean
-public StrategyManagerFactoryBean<HelloStrategy, People> helloStrategyManager(){
-    StrategyManagerFactoryBean<HelloStrategy, People> factoryBean = new StrategyManagerFactoryBean<>();
+public StrategyContainerFactoryBean<HelloStrategy, People> helloStrategyContainer(){
+    StrategyContainerFactoryBean<HelloStrategy, People> factoryBean = new StrategyContainerFactoryBean<>();
     factoryBean.setStrategyClass(HelloStrategy.class);
     factoryBean.setStrategyAnnotationClass(People.class);
     factoryBean.setIdentifyCodeGetter(a -> Joiner.on(",").join(a.district(),a.gender().name()));
@@ -97,38 +97,38 @@ public StrategyManagerFactoryBean<HelloStrategy, People> helloStrategyManager(){
 
 > 目前来看不支持xml配置，因为有函数入参，都sb时代了，谁还xml
 
-由下面的注入可以发现，Spring忽略了泛型，因此在StrategyManagerFactoryBean增加了一个build方法，简化配置
+由下面的注入可以发现，Spring忽略了泛型，因此在StrategyContainerFactoryBean增加了一个build方法，简化配置
 ```
 @Bean
-public StrategyManagerFactoryBean helloStrategyManager(){
-    return StrategyManagerFactoryBean.build(HelloStrategy.class,People.class,a -> Joiner.on(",").join(a.district(),a.gender().name()));
+public StrategyContainerFactoryBean helloStrategyContainer(){
+    return StrategyContainerFactoryBean.build(HelloStrategy.class,People.class,a -> Joiner.on(",").join(a.district(),a.gender().name()));
 }
 ```
 
 
-3. 注入StrategyManager
+3. 注入StrategyContainer
 ```
 /**
  * 需要注意，spring容器注入会把泛型丢掉，所以必须通过beanname注入
- * 或者@bean的方法名和下面的属性名helloStrategyManager保持一致
+ * 或者@bean的方法名和下面的属性名helloStrategyContainer保持一致
  */
-@Resource(name = "helloStrategyManager")
-private StrategyManager<HelloStrategy> helloStrategyManager;
+@Resource(name = "helloStrategyContainer")
+private StrategyContainer<HelloStrategy> helloStrategyContainer;
 ```
 
 
 
 4. 使用
 ```
-HelloStrategy helloStrategy = helloStrategyManager.getStrategy(Joiner.on(",").join("chinese", GenderEnum.FEMALE.name()));
+HelloStrategy helloStrategy = helloStrategyContainer.getStrategy(Joiner.on(",").join("chinese", GenderEnum.FEMALE.name()));
 helloStrategy.hello()
 ```
 
 5. 手动绑定策略
 
-StrategyManager接口有一个register方法用于手动绑定identifyCode和策略
+StrategyContainer接口有一个register方法用于手动绑定identifyCode和策略
 ```
-helloStrategyManager.register(Joiner.on(",").join("american", GenderEnum.FEMALE.name()),()->{
+helloStrategyContainer.register(Joiner.on(",").join("american", GenderEnum.FEMALE.name()),()->{
     return "hello";
 });
 ```
@@ -136,4 +136,4 @@ helloStrategyManager.register(Joiner.on(",").join("american", GenderEnum.FEMALE.
 > 完整示例见test
 
 ## 更新
-2019-08-12 修改类名StrategyManager为StrategyContainer
+2019-08-12 修改类名StrategyContainer为StrategyContainer
