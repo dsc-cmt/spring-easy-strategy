@@ -18,7 +18,7 @@ import java.util.function.Function;
  * @author shengchaojie
  * @date 2019-07-30
  **/
-public class StrategyManagerFactoryBean<T,V extends Annotation> implements FactoryBean<StrategyManager>, ApplicationContextAware {
+public class StrategyContainerFactoryBean<T,V extends Annotation> implements FactoryBean<StrategyContainer>, ApplicationContextAware {
 
     private Class<T> strategyClass;
 
@@ -28,8 +28,8 @@ public class StrategyManagerFactoryBean<T,V extends Annotation> implements Facto
 
     private Map<String,T> strategyTable = new HashMap<>();
 
-    public static <T,V extends Annotation> StrategyManagerFactoryBean<T,V> build(Class<T> strategyClass, Class<V> strategyAnnotationClass ,Function<V,String> identifyCodeGetter) {
-        StrategyManagerFactoryBean<T,V> factoryBean = new StrategyManagerFactoryBean<>();
+    public static <T,V extends Annotation> StrategyContainerFactoryBean<T,V> build(Class<T> strategyClass, Class<V> strategyAnnotationClass , Function<V,String> identifyCodeGetter) {
+        StrategyContainerFactoryBean<T,V> factoryBean = new StrategyContainerFactoryBean<>();
         factoryBean.setStrategyClass(strategyClass);
         factoryBean.setStrategyAnnotationClass(strategyAnnotationClass);
         factoryBean.setIdentifyCodeGetter(identifyCodeGetter);
@@ -37,11 +37,11 @@ public class StrategyManagerFactoryBean<T,V extends Annotation> implements Facto
     }
 
     @Override
-    public StrategyManager<T> getObject() throws Exception {
+    public StrategyContainer<T> getObject() throws Exception {
         Assert.notNull(strategyClass,"strategyClass must not be null");
         Assert.notNull(strategyAnnotationClass,"strategyAnnotationClass must not be null");
         Assert.notNull(identifyCodeGetter,"identifyCodeGetter must not be null");
-        return new StrategyManager<T>() {
+        return new StrategyContainer<T>() {
             @Override
             public T getStrategy(String identifyCode) {
                 return strategyTable.get(identifyCode);
@@ -68,7 +68,7 @@ public class StrategyManagerFactoryBean<T,V extends Annotation> implements Facto
 
     @Override
     public Class<?> getObjectType() {
-        return StrategyManager.class;
+        return StrategyContainer.class;
     }
 
     @Override

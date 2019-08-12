@@ -1,10 +1,9 @@
 package org.springframework.extend.strategy.test.demo.service;
 
-import org.springframework.extend.strategy.StrategyManager;
+import org.springframework.extend.strategy.StrategyContainer;
 import org.springframework.extend.strategy.test.demo.ProductTypeEnum;
 import org.springframework.extend.strategy.test.demo.calculateprice.CalculatePriceStrategy;
 import org.springframework.extend.strategy.test.demo.rewardpoints.PointsRewardStrategy;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -21,11 +20,11 @@ public class OrderService {
      * 需要注意，spring容器注入会把泛型丢掉，所以必须通过beanname注入
      */
     @Resource(name = "calculatePriceStrategyManager2")
-    private StrategyManager<CalculatePriceStrategy> calculatePriceStrategyManager;
+    private StrategyContainer<CalculatePriceStrategy> calculatePriceStrategyContainer;
 
 
     @Resource(name = "pointsRewardStrategyManager3")
-    private StrategyManager<PointsRewardStrategy> pointsRewardStrategyManager;
+    private StrategyContainer<PointsRewardStrategy> pointsRewardStrategyContainer;
 
     /**
      * 创建订单
@@ -34,13 +33,13 @@ public class OrderService {
     public void createOrder(CreateOrderRequest createOrderRequest){
         //创建订单实体
         //计算价格
-        CalculatePriceStrategy calculatePriceStrategy = calculatePriceStrategyManager.getStrategy(getSkuProductType(createOrderRequest.getSku()));
+        CalculatePriceStrategy calculatePriceStrategy = calculatePriceStrategyContainer.getStrategy(getSkuProductType(createOrderRequest.getSku()));
         Integer originPrice = getSkuUnitPrice(createOrderRequest.getSku());
         System.out.println("原价"+originPrice/100.0f+"购买件数"+createOrderRequest.getNum());
         Integer price = calculatePriceStrategy.calculate(createOrderRequest.getSku(),originPrice,createOrderRequest.getNum());
         System.out.println("下单价格为"+price/100.0f);
         //计算积分
-        PointsRewardStrategy pointsRewardStrategy = pointsRewardStrategyManager.getStrategy(createOrderRequest.getUserLevel().name());
+        PointsRewardStrategy pointsRewardStrategy = pointsRewardStrategyContainer.getStrategy(createOrderRequest.getUserLevel().name());
         Integer points = pointsRewardStrategy.rewardPoints(price);
         System.out.println("奖励积分"+points);
 

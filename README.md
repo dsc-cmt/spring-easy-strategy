@@ -134,3 +134,6 @@ helloStrategyManager.register(Joiner.on(",").join("american", GenderEnum.FEMALE.
 ```
 
 > 完整示例见test
+
+## 更新
+2019-08-12 修改类名StrategyManager为StrategyContainer
