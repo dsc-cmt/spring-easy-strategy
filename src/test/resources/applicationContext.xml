@@ -7,4 +7,13 @@
 
     <context:component-scan base-package="org.springframework.extend.strategy.test" />
 
+    <bean id="beforeAdvice" class="org.springframework.extend.strategy.test.function.advice.TestAdvice"/>
+
+    <bean class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+        <property name="advice" ref="beforeAdvice"/>
+        <property name="pattern" value=".*hello" />
+    </bean>
+
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"/>
+
 </beans>

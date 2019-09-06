@@ -1,5 +1,6 @@
 package org.springframework.extend.strategy;
 
+import org.springframework.aop.support.AopUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.context.ApplicationContext;
@@ -81,7 +82,7 @@ public class StrategyContainerFactoryBean<T,V extends Annotation> implements Fac
         String names[] = applicationContext.getBeanNamesForType(strategyClass);
         Arrays.stream(names).forEach(name->{
             T object = applicationContext.getBean(name,strategyClass);
-            V identifier = AnnotationUtils.getAnnotation(object.getClass(),strategyAnnotationClass);
+            V identifier = AnnotationUtils.getAnnotation(AopUtils.getTargetClass(object),strategyAnnotationClass);
             if(Objects.nonNull(identifier)){
                 strategyTable.put(identifyCodeGetter.apply(identifier),object);
             }
