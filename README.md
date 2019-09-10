@@ -1,3 +1,5 @@
+> 运行环境需要java8
+
 ## 介绍
 spring-strategy-tool 是一个在spring环境下方便进行策略模式开发的工具类。  
 在业务开发使用策略模式中，发现策略的注册以及获取逻辑是一个重复的功能，所以设计该工具类方便开发。  
@@ -32,6 +34,7 @@ price = strategy.calculate(...)
 2. 通过`mvn clean install (deploy) -Dmaven.test.skip=true` 安装到本地/远程仓库然后引入你的项目
 
 ## 如何使用
+### 基础使用
 在这个框架中，每个接口的策略实现都会存在一个identifyCode对应，该identifyCode通过注解以及自定义逻辑生成
 
 0. 你的策略接口
@@ -124,18 +127,70 @@ HelloStrategy helloStrategy = helloStrategyContainer.getStrategy(Joiner.on(",").
 helloStrategy.hello()
 ```
 
-5. 手动绑定策略
+> 这边getStrategy的入参需要和自定义注解生成的identifyCode相同
+> 如果对于一个策略接口，有相同的identifyCode产生，在FactoryBean初始化的时候会报错
 
-StrategyContainer接口有一个register方法用于手动绑定identifyCode和策略
+### 进阶功能
+1. 手动绑定策略
+
+StrategyContainer接口提供一个register方法用于手动绑定identifyCode和策略
 ```
 helloStrategyContainer.register(Joiner.on(",").join("american", GenderEnum.FEMALE.name()),()->{
     return "hello";
 });
 ```
 
-> 完整示例见test
+2. 单策略支持多注解
+在业务开发中，很多场景下，对于多个identifyCode我们的策略是相同。  
+在原有自定义注解的基础上进行改造，比如原有注解如下
+```
+@Target({ElementType.TYPE})
+@Retention(RetentionPolicy.RUNTIME)
+@Component
+public @interface One {
+
+    String test();
+
+}
+
+```
+我们新增一个容器注解，为了支持在同一类上标注多个相同注解
+```
+@Target({ElementType.TYPE})
+@Retention(RetentionPolicy.RUNTIME)
+@Component
+public @interface Many {
+
+    One[] value();
+}
+```
+修改原有注解为
+```
+@Target({ElementType.TYPE})
+@Retention(RetentionPolicy.RUNTIME)
+@Repeatable(Many.class)
+@Component
+public @interface One {
+
+    String test();
+
+}
+```
+这是java8提供的语法糖，在做如上配置后，你就能在一个策略类标注多个相同注解了
+
+
+3. 默认策略
+新增了一个DefaultStrategy注解，策略类标注该注解后，如果通过identifyCode找不到策略实现，会执行默认策略逻辑。
+
+> 注意: 一个接口默认策略只能有一个，不然会报错
+
+
+> 完整使用案例示例见test
 
 ## 更新
+- 2019-09-10  
+    支持单策略多注解  
+    支持默认注解
 - 2019-09-06   
     解决策略类生成Aop代理时获取不到策略的问题,增加Aop相关测试用例
 - 2019-08-12   
