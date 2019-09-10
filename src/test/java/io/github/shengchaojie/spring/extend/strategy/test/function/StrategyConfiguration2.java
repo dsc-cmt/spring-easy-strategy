@@ -28,8 +28,7 @@ public class StrategyConfiguration2 {
 
     @Bean
     public StrategyContainerFactoryBean<RepeatableStrategy, One> repeatableStrategyManager(){
-        return StrategyContainerFactoryBean.build(RepeatableStrategy.class,One.class, a -> a.test(),true);
-
+        return StrategyContainerFactoryBean.build(RepeatableStrategy.class,One.class, a -> a.test());
     }
 
 }
