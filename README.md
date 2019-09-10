@@ -140,7 +140,7 @@ helloStrategyContainer.register(Joiner.on(",").join("american", GenderEnum.FEMAL
 });
 ```
 
-2. 单策略支持多注解
+2. 单策略支持多注解  
 在业务开发中，很多场景下，对于多个identifyCode我们的策略是相同。  
 在原有自定义注解的基础上进行改造，比如原有注解如下
 ```
@@ -179,7 +179,7 @@ public @interface One {
 这是java8提供的语法糖，在做如上配置后，你就能在一个策略类标注多个相同注解了
 
 
-3. 默认策略
+3. 默认策略  
 新增了一个DefaultStrategy注解，策略类标注该注解后，如果通过identifyCode找不到策略实现，会执行默认策略逻辑。
 
 > 注意: 一个接口默认策略只能有一个，不然会报错
