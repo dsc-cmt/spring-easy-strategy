@@ -2,10 +2,7 @@ package io.github.shengchaojie.spring.extend.strategy;
 
 import org.springframework.stereotype.Component;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.lang.annotation.*;
 
 /**
  * 策略类注解
@@ -15,6 +12,7 @@ import java.lang.annotation.Target;
  **/
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
+@Repeatable(StrategyIdentifiers.class)
 @Component
 public @interface StrategyIdentifier {
 
