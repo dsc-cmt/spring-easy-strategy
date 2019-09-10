@@ -1,16 +1,23 @@
 package io.github.shengchaojie.spring.extend.strategy.test.function;
 
+import com.google.common.base.Joiner;
 import io.github.shengchaojie.spring.extend.strategy.StrategyContainer;
 import io.github.shengchaojie.spring.extend.strategy.StrategyContainerFactoryBean;
-import io.github.shengchaojie.spring.extend.strategy.exceptions.StrategyDuplicateException;
+import io.github.shengchaojie.spring.extend.strategy.exceptions.StrategyException;
+import io.github.shengchaojie.spring.extend.strategy.test.function.common.GenderEnum;
+import io.github.shengchaojie.spring.extend.strategy.test.function.common.HelloStrategy;
+import io.github.shengchaojie.spring.extend.strategy.test.function.common.JapanGirlHelloStrategy;
+import io.github.shengchaojie.spring.extend.strategy.test.function.common.People;
 import io.github.shengchaojie.spring.extend.strategy.test.function.repeatable.One;
 import io.github.shengchaojie.spring.extend.strategy.test.function.repeatable.RepeatableStrategy;
 import io.github.shengchaojie.spring.extend.strategy.test.function.repeatable.RepeatableStrategy1;
+import io.github.shengchaojie.spring.extend.strategy.test.function.repeatable.RepeatableStrategy2;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.context.ApplicationContext;
+import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -18,15 +25,48 @@ import javax.annotation.Resource;
 
 /**
  * @author shengchaojie
- * @date 2019-09-10
+ * @date 2019-08-01
  **/
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath*:applicationContext.xml")
-public class RepeatableStrategyTest {
+public class FunctionTest {
+
+    /**
+     * 需要注意，spring容器注入会把泛型丢掉，所以必须通过beanname注入
+     */
+    @Resource(name = "helloStrategyManager")
+    private StrategyContainer<HelloStrategy> helloStrategyContainer;
 
     @Resource(name = "repeatableStrategyManager")
-    StrategyContainer<RepeatableStrategy> repeatableStrategyContainer;
+    private StrategyContainer<RepeatableStrategy> repeatableStrategyContainer;
 
+
+    @Test
+    public void testBasicGetStrategy(){
+        HelloStrategy helloStrategy = helloStrategyContainer.getStrategy(Joiner.on(",").join("chinese", GenderEnum.FEMALE.name()));
+        Assert.assertEquals("你好",helloStrategy.hello());
+
+        helloStrategy = helloStrategyContainer.getStrategy(Joiner.on(",").join("japan", GenderEnum.FEMALE.name()));
+        Assert.assertEquals("ohayo",helloStrategy.hello());
+    }
+
+    @Test
+    public void testProgrammaticAddStrategy(){
+        helloStrategyContainer.register(Joiner.on(",").join("american", GenderEnum.FEMALE.name()),()->{
+            return "custom";
+        });
+
+        HelloStrategy helloStrategy = helloStrategyContainer.getStrategy(Joiner.on(",").join("american", GenderEnum.FEMALE.name()));
+        Assert.assertNotNull(helloStrategy);
+        Assert.assertEquals("custom",helloStrategy.hello());
+    }
+
+    @Test
+    public void testDefaultStrategy(){
+        HelloStrategy helloStrategy = helloStrategyContainer.getStrategy("2324234234324");
+        Assert.assertNotNull(helloStrategy);
+        Assert.assertEquals("default",helloStrategy.hello());
+    }
 
     @Test
     public void testRepeatable(){
@@ -36,7 +76,7 @@ public class RepeatableStrategyTest {
     }
 
     @Test
-    public void testMultiError() throws Exception {
+    public void testMultiStrategyThrowError() throws Exception {
         ApplicationContext applicationContext = Mockito.mock(ApplicationContext.class);
 
         Mockito.when(applicationContext.getBeanNamesForType(RepeatableStrategy.class)).thenReturn(new String[]{"1","2","3"});
@@ -51,7 +91,7 @@ public class RepeatableStrategyTest {
             factoryBean.setIdentifyCodeGetter(a->a.test());
             factoryBean.setApplicationContext(applicationContext);
         }catch (Exception ex){
-            Assert.assertTrue(ex instanceof StrategyDuplicateException);
+            Assert.assertTrue(ex instanceof StrategyException);
         }
 
     }

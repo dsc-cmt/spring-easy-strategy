@@ -1,7 +1,7 @@
 package io.github.shengchaojie.spring.extend.strategy;
 
 import com.google.common.collect.Lists;
-import io.github.shengchaojie.spring.extend.strategy.exceptions.StrategyDuplicateException;
+import io.github.shengchaojie.spring.extend.strategy.exceptions.StrategyException;
 import org.springframework.aop.support.AopUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.FactoryBean;
@@ -29,6 +29,8 @@ public class StrategyContainerFactoryBean<T,V extends Annotation> implements Fac
 
     private Map<String,T> strategyTable = new HashMap<>();
 
+    private T defaultStrategy;
+
     public static <T,V extends Annotation> StrategyContainerFactoryBean<T,V> build(Class<T> strategyClass, Class<V> strategyAnnotationClass , Function<V,String> identifyCodeGetter) {
         StrategyContainerFactoryBean<T,V> factoryBean = new StrategyContainerFactoryBean<>();
         factoryBean.setStrategyClass(strategyClass);
@@ -46,7 +48,7 @@ public class StrategyContainerFactoryBean<T,V extends Annotation> implements Fac
         return new StrategyContainer<T>() {
             @Override
             public T getStrategy(String identifyCode) {
-                return strategyTable.get(identifyCode);
+                return Optional.ofNullable(strategyTable.get(identifyCode)).orElse(defaultStrategy);
             }
 
             @Override
@@ -83,13 +85,20 @@ public class StrategyContainerFactoryBean<T,V extends Annotation> implements Fac
         String[] names = applicationContext.getBeanNamesForType(strategyClass);
         Arrays.stream(names).forEach(name->{
             T object = applicationContext.getBean(name,strategyClass);
+            if(Objects.nonNull(AnnotationUtils.getAnnotation(AopUtils.getTargetClass(object),DefaultStrategy.class))){
+                if(Objects.nonNull(defaultStrategy)){
+                    throw new StrategyException("StrategyClass="+strategyClass.getName()+"can only have one default strategy");
+                }else{
+                    defaultStrategy = object;
+                }
+            }
             List<V> identifiers = Lists.newArrayList();
             identifiers.addAll(AnnotationUtils.getRepeatableAnnotations(AopUtils.getTargetClass(object), strategyAnnotationClass));
             if(!CollectionUtils.isEmpty(identifiers)){
                 identifiers.forEach(i->{
                     String identifyCode = identifyCodeGetter.apply(i);
                     if(Objects.nonNull(strategyTable.putIfAbsent(identifyCode,object))){
-                        throw new StrategyDuplicateException("StrategyClass="+strategyClass.getName()+",identifyCode="+identifyCode+"exist multi config");
+                        throw new StrategyException("StrategyClass="+strategyClass.getName()+",identifyCode="+identifyCode+"exist multi config");
                     }
                 });
             }
