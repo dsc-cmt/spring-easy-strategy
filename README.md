@@ -196,4 +196,4 @@ public @interface One {
 - 2019-09-06   
     解决策略类生成Aop代理时获取不到策略的问题,增加Aop相关测试用例
 - 2019-08-12   
-    修改类名StrategyContainer为StrategyContainer
+    修改类名StrategyManager为StrategyContainer
