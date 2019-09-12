@@ -75,7 +75,7 @@ public class ChineseGirlHelloStrategy implements HelloStrategy {
 }
 ```
 
-如果只有一个属性，直接使用自带的StrategyIdentifier注解即可
+如果只有一个属性，直接使用自带的**@StrategyIdentifier**注解即可
 
 2. 配置StrategyContainerFactoryBean
 
@@ -182,7 +182,7 @@ public @interface One {
 
 
 3. 默认策略  
-新增了一个DefaultStrategy注解，策略类标注该注解后，如果通过identifyCode找不到策略实现，会执行默认策略逻辑。
+新增了一个**@DefaultStrategy**注解，策略类标注该注解后，如果通过identifyCode找不到策略实现，会执行默认策略逻辑。
 
 > 注意: 一个接口默认策略只能有一个，不然会报错
 
