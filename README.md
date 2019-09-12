@@ -47,6 +47,8 @@ public interface HelloStrategy {
 
 1. 实现自定义注解  
 
+> 如果只有一个属性，直接使用自带的`@StrategyIdentifier`注解即可
+
 考虑到有些策略是通过多个属性进行匹配的，所以这边支持自定义注解绑定策略
 ```
 @Target({ElementType.TYPE})
@@ -74,8 +76,6 @@ public class ChineseGirlHelloStrategy implements HelloStrategy {
     }
 }
 ```
-
-如果只有一个属性，直接使用自带的`@StrategyIdentifier`注解即可
 
 2. 配置StrategyContainerFactoryBean
 
