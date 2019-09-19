@@ -72,19 +72,6 @@
 
     </dependencies>
 
-    <distributionManagement>
-        <repository>
-            <id>nexus-releases</id>
-            <name>Local Nexus Repository</name>
-            <url>https://repo.souche-inc.com/repository/releases/</url>
-        </repository>
-        <snapshotRepository>
-            <id>nexus-snapshots</id>
-            <name>Local Nexus Repository</name>
-            <url>https://repo.souche-inc.com/repository/snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement>
-
     <build>
         <plugins>
             <plugin>
