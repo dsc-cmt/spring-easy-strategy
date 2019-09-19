@@ -1,9 +1,12 @@
 package io.github.shengchaojie.spring.extend.strategy.test.function;
 
 import com.google.common.base.Joiner;
+import io.github.shengchaojie.spring.extend.strategy.MultiStrategyContainerFactoryBean;
 import io.github.shengchaojie.spring.extend.strategy.StrategyContainerFactoryBean;
+import io.github.shengchaojie.spring.extend.strategy.StrategyIdentifier;
 import io.github.shengchaojie.spring.extend.strategy.test.function.common.HelloStrategy;
 import io.github.shengchaojie.spring.extend.strategy.test.function.common.People;
+import io.github.shengchaojie.spring.extend.strategy.test.function.multi.Validation;
 import io.github.shengchaojie.spring.extend.strategy.test.function.repeatable.One;
 import io.github.shengchaojie.spring.extend.strategy.test.function.repeatable.RepeatableStrategy;
 import org.springframework.context.annotation.Bean;
@@ -29,6 +32,11 @@ public class StrategyConfiguration2 {
     @Bean
     public StrategyContainerFactoryBean<RepeatableStrategy, One> repeatableStrategyManager(){
         return StrategyContainerFactoryBean.build(RepeatableStrategy.class,One.class, a -> a.test());
+    }
+
+    @Bean
+    public MultiStrategyContainerFactoryBean<Validation, StrategyIdentifier> validation(){
+        return MultiStrategyContainerFactoryBean.build(Validation.class,StrategyIdentifier.class,a -> a.identifyCode());
     }
 
 }

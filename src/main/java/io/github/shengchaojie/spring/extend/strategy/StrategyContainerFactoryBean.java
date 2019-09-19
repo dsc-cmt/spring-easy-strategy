@@ -2,12 +2,14 @@ package io.github.shengchaojie.spring.extend.strategy;
 
 import com.google.common.collect.Lists;
 import io.github.shengchaojie.spring.extend.strategy.exceptions.StrategyException;
+import lombok.Setter;
 import org.springframework.aop.support.AopUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.core.annotation.AnnotationUtils;
+import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
@@ -19,12 +21,15 @@ import java.util.function.Function;
  * @author shengchaojie
  * @date 2019-07-30
  **/
-public class StrategyContainerFactoryBean<T,V extends Annotation> implements FactoryBean<StrategyContainer>, ApplicationContextAware {
+public class StrategyContainerFactoryBean<T,V extends Annotation> implements FactoryBean<StrategyContainer<T>>, ApplicationContextAware {
 
+    @Setter
     private Class<T> strategyClass;
 
+    @Setter
     private Class<V> strategyAnnotationClass;
 
+    @Setter
     private Function<V,String> identifyCodeGetter;
 
     private Map<String,T> strategyTable = new HashMap<>();
@@ -56,18 +61,6 @@ public class StrategyContainerFactoryBean<T,V extends Annotation> implements Fac
                 strategyTable.put(identifyCode,strategy);
             }
         };
-    }
-
-    public void setStrategyClass(Class<T> strategyClass) {
-        this.strategyClass = strategyClass;
-    }
-
-    public void setStrategyAnnotationClass(Class<V> strategyAnnotationClass) {
-        this.strategyAnnotationClass = strategyAnnotationClass;
-    }
-
-    public void setIdentifyCodeGetter(Function<V, String> identifyCodeGetter) {
-        this.identifyCodeGetter = identifyCodeGetter;
     }
 
     @Override

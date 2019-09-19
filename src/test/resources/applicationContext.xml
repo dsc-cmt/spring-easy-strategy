@@ -11,7 +11,13 @@
 
     <bean class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
         <property name="advice" ref="beforeAdvice"/>
-        <property name="pattern" value=".*hello" />
+        <property name="pattern" value="" />
+        <property name="patterns">
+            <array>
+                <value>.*hello</value>
+                <value>.*validate</value>
+            </array>
+        </property>
     </bean>
 
     <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"/>

@@ -1,6 +1,7 @@
 package io.github.shengchaojie.spring.extend.strategy.test.function;
 
 import com.google.common.base.Joiner;
+import io.github.shengchaojie.spring.extend.strategy.MultiStrategyContainer;
 import io.github.shengchaojie.spring.extend.strategy.StrategyContainer;
 import io.github.shengchaojie.spring.extend.strategy.StrategyContainerFactoryBean;
 import io.github.shengchaojie.spring.extend.strategy.exceptions.StrategyException;
@@ -8,6 +9,7 @@ import io.github.shengchaojie.spring.extend.strategy.test.function.common.Gender
 import io.github.shengchaojie.spring.extend.strategy.test.function.common.HelloStrategy;
 import io.github.shengchaojie.spring.extend.strategy.test.function.common.JapanGirlHelloStrategy;
 import io.github.shengchaojie.spring.extend.strategy.test.function.common.People;
+import io.github.shengchaojie.spring.extend.strategy.test.function.multi.*;
 import io.github.shengchaojie.spring.extend.strategy.test.function.repeatable.One;
 import io.github.shengchaojie.spring.extend.strategy.test.function.repeatable.RepeatableStrategy;
 import io.github.shengchaojie.spring.extend.strategy.test.function.repeatable.RepeatableStrategy1;
@@ -16,12 +18,14 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
+import org.springframework.aop.support.AopUtils;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author shengchaojie
@@ -40,6 +44,8 @@ public class FunctionTest {
     @Resource(name = "repeatableStrategyManager")
     private StrategyContainer<RepeatableStrategy> repeatableStrategyContainer;
 
+    @Resource
+    private MultiStrategyContainer<Validation> validationMultiStrategyContainer;
 
     @Test
     public void testBasicGetStrategy(){
@@ -94,6 +100,24 @@ public class FunctionTest {
             Assert.assertTrue(ex instanceof StrategyException);
         }
 
+    }
+
+    @Test
+    public void testGetOrderedMultiStrategy(){
+        List<Validation> strategies = validationMultiStrategyContainer.getStrategies("1");
+        Assert.assertEquals(2,strategies.size());
+        Assert.assertTrue(AopUtils.getTargetClass(strategies.get(0)).isAssignableFrom(BValidation.class));
+        Assert.assertTrue(AopUtils.getTargetClass(strategies.get(1)).isAssignableFrom(AValidation.class));
+        strategies = validationMultiStrategyContainer.getStrategies("2");
+        Assert.assertEquals(2,strategies.size());
+        Assert.assertTrue(AopUtils.getTargetClass(strategies.get(0)).isAssignableFrom(DValidation.class));
+        Assert.assertTrue(AopUtils.getTargetClass(strategies.get(1)).isAssignableFrom(CValidation.class));
+        strategies = validationMultiStrategyContainer.getStrategies("3");
+        Assert.assertEquals(4,strategies.size());
+        Assert.assertTrue(AopUtils.getTargetClass(strategies.get(0)).isAssignableFrom(DValidation.class));
+        Assert.assertTrue(AopUtils.getTargetClass(strategies.get(1)).isAssignableFrom(CValidation.class));
+        Assert.assertTrue(AopUtils.getTargetClass(strategies.get(2)).isAssignableFrom(BValidation.class));
+        Assert.assertTrue(AopUtils.getTargetClass(strategies.get(3)).isAssignableFrom(AValidation.class));
     }
 
 }
