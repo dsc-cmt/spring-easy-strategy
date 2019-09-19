@@ -37,7 +37,7 @@ price = strategy.calculate(...)
 ### 基础使用
 在这个框架中，每个接口的策略实现都会存在一个identifyCode对应，该identifyCode通过注解以及自定义逻辑生成
 
-0. 你的策略接口
+#### 0. 你的策略接口
 ```
 public interface HelloStrategy {
 
@@ -45,7 +45,9 @@ public interface HelloStrategy {
 }
 ```
 
-1. 实现自定义注解  
+#### 1. 实现自定义注解  
+
+> 如果只有一个属性，直接使用自带的`@StrategyIdentifier`注解即可
 
 考虑到有些策略是通过多个属性进行匹配的，所以这边支持自定义注解绑定策略
 ```
@@ -75,9 +77,7 @@ public class ChineseGirlHelloStrategy implements HelloStrategy {
 }
 ```
 
-如果只有一个属性，直接使用自带的**@StrategyIdentifier**注解即可
-
-2. 配置StrategyContainerFactoryBean
+#### 2. 配置StrategyContainerFactoryBean
 
 StrategyContainerFactoryBean配置有三个  
 
@@ -87,7 +87,7 @@ StrategyContainerFactoryBean配置有三个
 |strategyAnnotationClass|  策略注解类  |
 |identifyCodeGetter | 从注解提取identifyCode的逻辑  |
 
-```
+```java
 @Bean
 public StrategyContainerFactoryBean<HelloStrategy, People> helloStrategyContainer(){
     StrategyContainerFactoryBean<HelloStrategy, People> factoryBean = new StrategyContainerFactoryBean<>();
@@ -109,7 +109,7 @@ public StrategyContainerFactoryBean helloStrategyContainer(){
 ```
 
 
-3. 注入StrategyContainer
+#### 3. 注入StrategyContainer
 ```
 /**
  * 需要注意，spring容器注入会把泛型丢掉，所以必须通过beanname注入
@@ -121,7 +121,7 @@ private StrategyContainer<HelloStrategy> helloStrategyContainer;
 
 
 
-4. 使用
+#### 4. 使用
 ```
 HelloStrategy helloStrategy = helloStrategyContainer.getStrategy(Joiner.on(",").join("chinese", GenderEnum.FEMALE.name()));
 helloStrategy.hello()
@@ -131,7 +131,7 @@ helloStrategy.hello()
 > 如果对于一个策略接口，有相同的identifyCode产生，在FactoryBean初始化的时候会报错
 
 ### 进阶功能
-1. 手动绑定策略
+#### 1. 手动绑定策略
 
 StrategyContainer接口提供一个register方法用于手动绑定identifyCode和策略
 ```
@@ -140,7 +140,7 @@ helloStrategyContainer.register(Joiner.on(",").join("american", GenderEnum.FEMAL
 });
 ```
 
-2. 单策略支持多注解  
+#### 2. 单策略支持多注解  
 在业务开发中，很多场景下，对于多个identifyCode我们的策略是相同。  
 在原有自定义注解的基础上进行改造，比如原有注解如下
 ```
@@ -181,8 +181,8 @@ public @interface One {
 框架自带的StrategyIdentifier已支持多注解模式
 
 
-3. 默认策略  
-新增了一个**@DefaultStrategy**注解，策略类标注该注解后，如果通过identifyCode找不到策略实现，会执行默认策略逻辑。
+#### 3. 默认策略  
+新增了一个`@DefaultStrategy`注解，策略类标注该注解后，如果通过identifyCode找不到策略实现，会执行默认策略逻辑。
 
 > 注意: 一个接口默认策略只能有一个，不然会报错  
 
@@ -244,4 +244,4 @@ List<Validation> strategies = validationMultiStrategyContainer.getStrategies("1"
 - 2019-09-06   
     解决策略类生成Aop代理时获取不到策略的问题,增加Aop相关测试用例
 - 2019-08-12   
-    修改类名StrategyContainer为StrategyContainer
+    修改类名StrategyManager为StrategyContainer
