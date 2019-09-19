@@ -44,7 +44,7 @@ public class FunctionTest {
     @Resource(name = "repeatableStrategyManager")
     private StrategyContainer<RepeatableStrategy> repeatableStrategyContainer;
 
-    @Resource
+    @Resource(name = "validation")
     private MultiStrategyContainer<Validation> validationMultiStrategyContainer;
 
     @Test

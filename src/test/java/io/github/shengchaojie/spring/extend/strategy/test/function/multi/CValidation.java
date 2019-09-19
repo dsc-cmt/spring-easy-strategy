@@ -14,7 +14,7 @@ import org.springframework.core.annotation.Order;
 public class CValidation implements Validation , Ordered {
     @Override
     public void validate() {
-        System.out.println("AAAAAA");
+        System.out.println("CCCCC");
     }
 
     @Override

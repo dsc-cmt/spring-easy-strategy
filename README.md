@@ -184,12 +184,60 @@ public @interface One {
 3. 默认策略  
 新增了一个**@DefaultStrategy**注解，策略类标注该注解后，如果通过identifyCode找不到策略实现，会执行默认策略逻辑。
 
-> 注意: 一个接口默认策略只能有一个，不然会报错
+> 注意: 一个接口默认策略只能有一个，不然会报错  
+
+4. 支持多策略模式
+某些业务场景下，针对一个identifyCode可能需要多个策略执行，比如我们的校验逻辑，针对一个业务方，可能会触发多个。  
+因此实现了MultiStrategyContainerFactoryBean类，基本使用和StrategyContainerFactoryBean类似。
+也正是因为通过identifyCode可以获取到多个策略了，针对这种模式，新增了排序功能，可以使用spring的Order注解来指定顺序。
+
+使用方式如下  
+策略配置
+```
+@StrategyIdentifier(identifyCode = "1")
+@StrategyIdentifier(identifyCode = "1")
+@StrategyIdentifier(identifyCode = "3")
+@Order(4)
+public class AValidation implements Validation{
+    @Override
+    public void validate() {
+        System.out.println("AAAAAA");
+    }
+}
+
+@StrategyIdentifier(identifyCode = "1")
+@StrategyIdentifier(identifyCode = "3")
+@Order(3)
+public class BValidation implements Validation{
+    @Override
+    public void validate() {
+        System.out.println("BBBBBBB");
+    }
+}
+```
+框架配置
+```
+@Bean
+public MultiStrategyContainerFactoryBean<Validation, StrategyIdentifier> validation(){
+    return MultiStrategyContainerFactoryBean.build(Validation.class,StrategyIdentifier.class,a -> a.identifyCode());
+}
+```
+注入
+```
+@Resource(name = "validation")
+private MultiStrategyContainer<Validation> validationMultiStrategyContainer;
+```
+使用
+```
+List<Validation> strategies = validationMultiStrategyContainer.getStrategies("1");
+```
 
 
 > 完整使用案例示例见test
 
 ## 更新
+- 2019-09-19
+    支持多策略模式
 - 2019-09-10  
     支持单策略多注解  
     支持默认注解
