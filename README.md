@@ -186,7 +186,7 @@ public @interface One {
 
 > 注意: 一个接口默认策略只能有一个，不然会报错  
 
-4. 支持多策略模式
+#### 4. 支持多策略模式
 某些业务场景下，针对一个identifyCode可能需要多个策略执行，比如我们的校验逻辑，针对一个业务方，可能会触发多个。  
 因此实现了MultiStrategyContainerFactoryBean类，基本使用和StrategyContainerFactoryBean类似。
 也正是因为通过identifyCode可以获取到多个策略了，针对这种模式，新增了排序功能，可以使用spring的Order注解来指定顺序。
@@ -232,9 +232,6 @@ private MultiStrategyContainer<Validation> validationMultiStrategyContainer;
 List<Validation> strategies = validationMultiStrategyContainer.getStrategies("1");
 ```
 
-
-> 完整使用案例示例见test
-
 ## 更新
 - 2019-09-19
     支持多策略模式
@@ -245,3 +242,5 @@ List<Validation> strategies = validationMultiStrategyContainer.getStrategies("1"
     解决策略类生成Aop代理时获取不到策略的问题,增加Aop相关测试用例
 - 2019-08-12   
     修改类名StrategyManager为StrategyContainer
+
+> 完整使用案例示例见test用例
