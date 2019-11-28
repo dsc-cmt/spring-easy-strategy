@@ -6,7 +6,30 @@
 
     <groupId>io.github.shengchaojie</groupId>
     <artifactId>spring-strategy-tool</artifactId>
-    <version>1.2.0-SNAPSHOT</version>
+    <version>1.2.0</version>
+
+    <name>spring-strategy-tool</name>
+    <description>a useful framework for use strategy design pattern in spring</description>
+    <url>https://github.com/shengchaojie/spring-strategy-extend</url>
+
+    <licenses>
+        <license>
+            <name>The Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>shengchaojie</name>
+            <email>shengchaojie@163.com</email>
+        </developer>
+    </developers>
+
+    <scm>
+        <url>https://github.com/shengchaojie/spring-strategy-extend</url>
+        <connection>https://github.com/shengchaojie/spring-strategy-extend.git</connection>
+    </scm>
 
     <properties>
         <spring.version>4.3.18.RELEASE</spring.version>
@@ -15,6 +38,8 @@
         <maven.compiler.compilerVersion>1.8</maven.compiler.compilerVersion>
         <lombok.version>1.18.6</lombok.version>
         <junit.version>4.12</junit.version>
+        <javadocExecutable>${java.home}/../bin/javadoc</javadocExecutable>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
@@ -72,16 +97,68 @@
 
     </dependencies>
 
+    <distributionManagement>
+        <repository>
+            <id>snapshots</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
+                <version>2.2.1</version>
                 <executions>
                     <execution>
-                        <id>attach-sources</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.9.1</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                    <aggregate>true</aggregate>
+                    <charset>UTF-8</charset>
+                    <docencoding>UTF-8</docencoding>
+                    <tags>
+                        <tag>
+                            <name>date</name>
+                            <placement>a</placement>
+                            <head>date</head>
+                        </tag>
+                    </tags>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
                         <goals>
                             <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.6</version>
+                <executions>
+                    <execution>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
                         </goals>
                     </execution>
                 </executions>
