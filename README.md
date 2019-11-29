@@ -30,8 +30,13 @@ price = strategy.calculate(...)
 2. 符合开闭原则，新增逻辑时，主流程代码不需要改动，只要增加新的策略即可
 
 ## 引入
-1. 直接复制到你的项目
-2. 通过`mvn clean install (deploy) -Dmaven.test.skip=true` 安装到本地/远程仓库然后引入你的项目
+```
+<dependency>
+  <groupId>io.github.shengchaojie</groupId>
+  <artifactId>spring-strategy-tool</artifactId>
+  <version>1.2.0</version>
+</dependency>
+```
 
 ## 如何使用
 ### 基础使用
