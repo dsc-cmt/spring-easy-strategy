@@ -30,6 +30,7 @@ price = strategy.calculate(...)
 2. 符合开闭原则，新增逻辑时，主流程代码不需要改动，只要增加新的策略即可
 
 ## 引入
+> 已上传到maven公库  
 ```
 <dependency>
   <groupId>io.github.shengchaojie</groupId>
