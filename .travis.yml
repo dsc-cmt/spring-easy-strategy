@@ -9,7 +9,7 @@ cache:
     - $HOME/.m2
 ## 不需要安装任何其他脚本
 script:
-  mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V -Dgpg.skip
+  - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -Dgpg.skip -B -V 
 
 after_success:
   - echo "build success!"
