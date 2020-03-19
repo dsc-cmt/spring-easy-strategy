@@ -8,10 +8,6 @@ cache:
   directories:
     - $HOME/.m2
 ## 不需要安装任何其他脚本
-install: true
-
-script:
-  - travis_wait 30 ./mvnw --batch-mode clean install -DskipTests=false  -Dmaven.javadoc.skip=true
 
 after_success:
   - echo "build success!"
