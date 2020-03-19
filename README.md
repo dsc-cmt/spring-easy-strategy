@@ -33,7 +33,7 @@ price = strategy.calculate(...)
 > 已上传到maven公库  
 ```
 <dependency>
-  <groupId>io.github.shengchaojie</groupId>
+  <groupId>com.cmt</groupId>
   <artifactId>spring-strategy-tool</artifactId>
   <version>1.2.0</version>
 </dependency>
