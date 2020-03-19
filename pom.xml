@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>io.github.shengchaojie</groupId>
+    <groupId>com.comt</groupId>
     <artifactId>spring-strategy-tool</artifactId>
     <version>1.2.0</version>
 
@@ -27,8 +27,8 @@
     </developers>
 
     <scm>
-        <url>https://github.com/shengchaojie/spring-strategy-extend</url>
-        <connection>https://github.com/shengchaojie/spring-strategy-extend.git</connection>
+        <url>https://github.com/dsc-cmt/spring-strategy-extend</url>
+        <connection>https://github.com/dsc-cmt/spring-strategy-extend.git</connection>
     </scm>
 
     <properties>
