@@ -1,3 +1,5 @@
+
+![Build Status](https://travis-ci.org/dsc-cmt/spring-strategy-extend.svg?branch=master)
 > 运行环境需要java8
 
 ## 介绍
