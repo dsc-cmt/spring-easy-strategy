@@ -1,0 +1,19 @@
+language: java
+sudo: false # faster builds
+
+jdk:
+  - openjdk8
+
+cache:
+  directories:
+    - $HOME/.m2
+## 不需要安装任何其他脚本
+script:
+  - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -Dgpg.skip -B -V 
+
+after_success:
+  - echo "build success!"
+  - bash <(curl -s https://codecov.io/bash)
+  
+after_failure:
+  - echo "build failed!"
