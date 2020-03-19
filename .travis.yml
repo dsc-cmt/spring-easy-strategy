@@ -7,9 +7,10 @@ jdk:
 cache:
   directories:
     - $HOME/.m2
-## 不需要安装任何其他脚本
+install: true
+
 script:
-  - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -Dgpg.skip -B -V 
+  - mvn clean package install -DskipTests=true -Dmaven.javadoc.skip=true -Dgpg.skip -B -V
 
 after_success:
   - echo "build success!"
