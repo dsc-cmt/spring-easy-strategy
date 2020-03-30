@@ -56,7 +56,7 @@ public interface PlatformStrategy {
 > 如果只有一个属性，直接使用自带的`@StrategyIdentifier`注解即可
 
 自定义注解是策略和标识符的桥梁
-```
+```java
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Component
@@ -109,13 +109,13 @@ public StrategyContainerFactoryBean<PlatformStrategy, Platform, PlatformEnum> pl
 
 由下面的注入可以发现，Spring忽略了泛型，因此在StrategyContainerFactoryBean增加了一个build方法，简化配置
 ```java
-    @Bean
-    public StrategyContainerFactoryBean<PlatformStrategy, Platform, PlatformEnum> platformStrategyManager() {
-        return StrategyContainerFactoryBean.build(
-                PlatformStrategy.class,
-                Platform.class,
-                Platform::value);
-    }
+@Bean
+public StrategyContainerFactoryBean<PlatformStrategy, Platform, PlatformEnum> platformStrategyManager() {
+    return StrategyContainerFactoryBean.build(
+            PlatformStrategy.class,
+            Platform.class,
+            Platform::value);
+}
 ```
 
 #### 3. 注入StrategyContainer
@@ -286,6 +286,9 @@ List<Validation> strategies = validationMultiStrategyContainer.getStrategies("1"
 ```
 
 ## 更新
+- 2020-03-30
+    策略标识符identifyCode使用泛型替换
+
 - 2019-09-19
     支持多策略模式
     
@@ -298,9 +301,6 @@ List<Validation> strategies = validationMultiStrategyContainer.getStrategies("1"
     
 - 2019-08-12   
     修改类名StrategyManager为StrategyContainer
-    
-- 2020-03-30
-  
-    策略标识符identifyCode使用泛型替换 
+
 
 > 完整使用案例示例见test用例
