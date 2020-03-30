@@ -44,7 +44,7 @@ price = strategy.calculate(...)
 在这个框架中，每个接口的策略实现都会存在一个identify对应，该identifyCode通过注解以及自定义逻辑生成
 
 #### 0. 你的策略接口
-```
+```java
 public interface PlatformStrategy {
 
     String hello();
@@ -187,7 +187,7 @@ helloStrategy.hello()
 #### 2. 手动绑定策略
 
 StrategyContainer接口提供一个register方法用于手动绑定identifyCode和策略
-```
+```java
 helloStrategyContainer.register(Joiner.on(",").join("american", GenderEnum.FEMALE.name()),()->{
     return "hello";
 });
@@ -196,7 +196,7 @@ helloStrategyContainer.register(Joiner.on(",").join("american", GenderEnum.FEMAL
 #### 3. 单策略支持多注解  
 在业务开发中，很多场景下，对于多个identifyCode我们的策略是相同。  
 在原有自定义注解的基础上进行改造，比如原有注解如下
-```
+```java
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Component
@@ -205,10 +205,9 @@ public @interface One {
     String test();
 
 }
-
 ```
 我们新增一个容器注解，为了支持在同一类上标注多个相同注解
-```
+```java
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Component
@@ -218,7 +217,7 @@ public @interface Many {
 }
 ```
 修改原有注解为
-```
+```java
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Repeatable(Many.class)
@@ -246,7 +245,7 @@ public @interface One {
 
 使用方式如下  
 策略配置
-```
+```java
 @StrategyIdentifier(identifyCode = "1")
 @StrategyIdentifier(identifyCode = "1")
 @StrategyIdentifier(identifyCode = "3")
@@ -269,19 +268,19 @@ public class BValidation implements Validation{
 }
 ```
 框架配置
-```
+```java
 @Bean
 public MultiStrategyContainerFactoryBean<Validation, StrategyIdentifier> validation(){
     return MultiStrategyContainerFactoryBean.build(Validation.class,StrategyIdentifier.class,a -> a.identifyCode());
 }
 ```
 注入
-```
+```java
 @Resource(name = "validation")
 private MultiStrategyContainer<Validation> validationMultiStrategyContainer;
 ```
 使用
-```
+```java
 List<Validation> strategies = validationMultiStrategyContainer.getStrategies("1");
 ```
 
