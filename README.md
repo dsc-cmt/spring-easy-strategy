@@ -1,3 +1,5 @@
+
+[![Build Status](https://travis-ci.org/dsc-cmt/spring-strategy-extend.svg?branch=master)](https://travis-ci.org/dsc-cmt/spring-strategy-extend)
 > 运行环境需要java8
 
 ## 介绍
@@ -30,10 +32,9 @@ price = strategy.calculate(...)
 2. 符合开闭原则，新增逻辑时，主流程代码不需要改动，只要增加新的策略即可
 
 ## 引入
-> 已上传到maven公库  
 ```
 <dependency>
-  <groupId>io.github.shengchaojie</groupId>
+  <groupId>com.cmt</groupId>
   <artifactId>spring-strategy-tool</artifactId>
   <version>1.2.0</version>
 </dependency>
