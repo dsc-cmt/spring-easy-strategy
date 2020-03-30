@@ -287,9 +287,11 @@ List<Validation> strategies = validationMultiStrategyContainer.getStrategies("1"
 
 ## 更新
 - 2020-03-30
+
     策略标识符identifyCode使用泛型替换
 
 - 2019-09-19
+    
     支持多策略模式
     
 - 2019-09-10  
