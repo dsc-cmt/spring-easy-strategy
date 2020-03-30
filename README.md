@@ -35,7 +35,7 @@ price = strategy.calculate(...)
 <dependency>
   <groupId>com.cmt</groupId>
   <artifactId>spring-strategy-tool</artifactId>
-  <version>1.2.1</version>
+  <version>1.3.0-SNAPSHOT</version>
 </dependency>
 ```
 
