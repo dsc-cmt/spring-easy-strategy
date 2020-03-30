@@ -5,9 +5,9 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <context:component-scan base-package="com.cmt.springstrategy" />
+    <context:component-scan base-package="io.github.cmt.springstrategy" />
 
-    <bean id="beforeAdvice" class="com.cmt.springstrategy.test.function.advice.TestAdvice"/>
+    <bean id="beforeAdvice" class="io.github.cmt.springstrategy.test.function.advice.TestAdvice"/>
 
     <bean class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
         <property name="advice" ref="beforeAdvice"/>
