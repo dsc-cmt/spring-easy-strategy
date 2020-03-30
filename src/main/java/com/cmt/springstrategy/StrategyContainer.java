@@ -4,10 +4,10 @@ package com.cmt.springstrategy;
  * @author shengchaojie
  * @date 2019-07-30
  **/
-public interface StrategyContainer<T> {
+public interface StrategyContainer<R, T> {
 
-    T getStrategy(String identifyCode);
+    T getStrategy(R identify);
 
-    void register(String identifyCode,T strategy);
+    void register(R identify, T strategy);
 
 }

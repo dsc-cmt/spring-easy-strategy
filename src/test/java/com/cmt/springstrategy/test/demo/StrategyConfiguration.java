@@ -20,8 +20,8 @@ public class StrategyConfiguration {
     }
 
     @Bean
-    public StrategyContainerFactoryBean<PointsRewardStrategy, StrategyIdentifier> pointsRewardStrategyManager3(){
-        StrategyContainerFactoryBean<PointsRewardStrategy, StrategyIdentifier> factoryBean = new StrategyContainerFactoryBean<>();
+    public StrategyContainerFactoryBean<PointsRewardStrategy, StrategyIdentifier,String> pointsRewardStrategyManager3(){
+        StrategyContainerFactoryBean<PointsRewardStrategy, StrategyIdentifier,String> factoryBean = new StrategyContainerFactoryBean<>();
         factoryBean.setStrategyClass(PointsRewardStrategy.class);
         factoryBean.setStrategyAnnotationClass(StrategyIdentifier.class);
         factoryBean.setIdentifyCodeGetter((a)->a.identifyCode());
