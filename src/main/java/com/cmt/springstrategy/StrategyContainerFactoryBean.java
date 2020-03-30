@@ -17,6 +17,9 @@ import java.util.*;
 import java.util.function.Function;
 
 /**
+ * @param <T> 策略接口
+ * @param <V> 策略实现类的标注注解
+ * @param <R> 策略标识符,使用者通过<R>来获取策略
  * @author shengchaojie
  * @date 2019-07-30
  **/
