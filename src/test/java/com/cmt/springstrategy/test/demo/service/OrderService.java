@@ -20,11 +20,11 @@ public class OrderService {
      * 需要注意，spring容器注入会把泛型丢掉，所以必须通过beanname注入
      */
     @Resource(name = "calculatePriceStrategyManager2")
-    private StrategyContainer<CalculatePriceStrategy> calculatePriceStrategyContainer;
+    private StrategyContainer<String, CalculatePriceStrategy> calculatePriceStrategyContainer;
 
 
     @Resource(name = "pointsRewardStrategyManager3")
-    private StrategyContainer<PointsRewardStrategy> pointsRewardStrategyContainer;
+    private StrategyContainer<String, PointsRewardStrategy> pointsRewardStrategyContainer;
 
     /**
      * 创建订单

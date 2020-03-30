@@ -6,6 +6,8 @@ import com.cmt.springstrategy.StrategyContainerFactoryBean;
 import com.cmt.springstrategy.exceptions.StrategyException;
 import com.cmt.springstrategy.test.function.common.GenderEnum;
 import com.cmt.springstrategy.test.function.common.HelloStrategy;
+import com.cmt.springstrategy.test.function.common.PlatformEnum;
+import com.cmt.springstrategy.test.function.common.PlatformStrategy;
 import com.cmt.springstrategy.test.function.multi.*;
 import com.cmt.springstrategy.test.function.repeatable.One;
 import com.cmt.springstrategy.test.function.repeatable.RepeatableStrategy;
@@ -35,10 +37,13 @@ public class FunctionTest {
      * 需要注意，spring容器注入会把泛型丢掉，所以必须通过beanname注入
      */
     @Resource(name = "helloStrategyManager")
-    private StrategyContainer<HelloStrategy> helloStrategyContainer;
+    private StrategyContainer<String, HelloStrategy> helloStrategyContainer;
+
+    @Resource(name = "platformStrategyManager")
+    private StrategyContainer<PlatformEnum, PlatformStrategy> platformStrategyContainer;
 
     @Resource(name = "repeatableStrategyManager")
-    private StrategyContainer<RepeatableStrategy> repeatableStrategyContainer;
+    private StrategyContainer<String, RepeatableStrategy> repeatableStrategyContainer;
 
     @Resource(name = "validation")
     private MultiStrategyContainer<Validation> validationMultiStrategyContainer;
@@ -50,6 +55,17 @@ public class FunctionTest {
 
         helloStrategy = helloStrategyContainer.getStrategy(Joiner.on(",").join("japan", GenderEnum.FEMALE.name()));
         Assert.assertEquals("ohayo",helloStrategy.hello());
+    }
+    @Test
+    public void testEnumGetStrategy(){
+        PlatformStrategy platformStrategy = platformStrategyContainer.getStrategy(PlatformEnum.ALI);
+        Assert.assertEquals("阿里巴巴",platformStrategy.hello());
+
+        platformStrategy = platformStrategyContainer.getStrategy(PlatformEnum.TENCENT);
+        Assert.assertEquals("腾讯",platformStrategy.hello());
+
+        platformStrategy = platformStrategyContainer.getStrategy(PlatformEnum.BAI_DU);
+        Assert.assertEquals("百度",platformStrategy.hello());
     }
 
     @Test
@@ -87,10 +103,10 @@ public class FunctionTest {
         Mockito.when(applicationContext.getBean("3",RepeatableStrategy.class)).thenReturn(new RepeatableStrategy1());
 
         try {
-            StrategyContainerFactoryBean<RepeatableStrategy, One> factoryBean = new StrategyContainerFactoryBean<>();
+            StrategyContainerFactoryBean<RepeatableStrategy, One, String> factoryBean = new StrategyContainerFactoryBean<>();
             factoryBean.setStrategyClass(RepeatableStrategy.class);
             factoryBean.setStrategyAnnotationClass(One.class);
-            factoryBean.setIdentifyCodeGetter(a->a.test());
+            factoryBean.setIdentifyGetter(a->a.test());
             factoryBean.setApplicationContext(applicationContext);
         }catch (Exception ex){
             Assert.assertTrue(ex instanceof StrategyException);

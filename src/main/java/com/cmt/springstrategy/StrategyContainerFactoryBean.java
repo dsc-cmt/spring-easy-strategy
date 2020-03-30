@@ -20,7 +20,7 @@ import java.util.function.Function;
  * @author shengchaojie
  * @date 2019-07-30
  **/
-public class StrategyContainerFactoryBean<T,V extends Annotation> implements FactoryBean<StrategyContainer<T>>, ApplicationContextAware {
+public class StrategyContainerFactoryBean<T, V extends Annotation, R> implements FactoryBean<StrategyContainer<R, T>>, ApplicationContextAware {
 
     @Setter
     private Class<T> strategyClass;
@@ -29,35 +29,35 @@ public class StrategyContainerFactoryBean<T,V extends Annotation> implements Fac
     private Class<V> strategyAnnotationClass;
 
     @Setter
-    private Function<V,String> identifyCodeGetter;
+    private Function<V, R> identifyGetter;
 
-    private Map<String,T> strategyTable = new HashMap<>();
+    private Map<R, T> strategyTable = new HashMap<>();
 
     private T defaultStrategy;
 
-    public static <T,V extends Annotation> StrategyContainerFactoryBean<T,V> build(Class<T> strategyClass, Class<V> strategyAnnotationClass , Function<V,String> identifyCodeGetter) {
-        StrategyContainerFactoryBean<T,V> factoryBean = new StrategyContainerFactoryBean<>();
+    public static <T, V extends Annotation, R> StrategyContainerFactoryBean<T, V, R> build(Class<T> strategyClass, Class<V> strategyAnnotationClass, Function<V, R> identifyGetter) {
+        StrategyContainerFactoryBean<T, V, R> factoryBean = new StrategyContainerFactoryBean<>();
         factoryBean.setStrategyClass(strategyClass);
         factoryBean.setStrategyAnnotationClass(strategyAnnotationClass);
-        factoryBean.setIdentifyCodeGetter(identifyCodeGetter);
+        factoryBean.setIdentifyGetter(identifyGetter);
         return factoryBean;
     }
 
     @Override
-    public StrategyContainer<T> getObject() throws Exception {
-        Assert.notNull(strategyClass,"strategyClass must not be null");
-        Assert.notNull(strategyAnnotationClass,"strategyAnnotationClass must not be null");
-        Assert.notNull(identifyCodeGetter,"identifyCodeGetter must not be null");
+    public StrategyContainer<R, T> getObject() throws Exception {
+        Assert.notNull(strategyClass, "strategyClass must not be null");
+        Assert.notNull(strategyAnnotationClass, "strategyAnnotationClass must not be null");
+        Assert.notNull(identifyGetter, "identifyGetter must not be null");
 
-        return new StrategyContainer<T>() {
+        return new StrategyContainer<R, T>() {
             @Override
-            public T getStrategy(String identifyCode) {
-                return Optional.ofNullable(strategyTable.get(identifyCode)).orElse(defaultStrategy);
+            public T getStrategy(R identify) {
+                return Optional.ofNullable(strategyTable.get(identify)).orElse(defaultStrategy);
             }
 
             @Override
-            public void register(String identifyCode, T strategy) {
-                strategyTable.put(identifyCode,strategy);
+            public void register(R identify, T strategy) {
+                strategyTable.put(identify, strategy);
             }
         };
     }
@@ -75,22 +75,22 @@ public class StrategyContainerFactoryBean<T,V extends Annotation> implements Fac
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         String[] names = applicationContext.getBeanNamesForType(strategyClass);
-        Arrays.stream(names).forEach(name->{
-            T object = applicationContext.getBean(name,strategyClass);
-            if(Objects.nonNull(AnnotationUtils.getAnnotation(AopUtils.getTargetClass(object),DefaultStrategy.class))){
-                if(Objects.nonNull(defaultStrategy)){
-                    throw new StrategyException("StrategyClass="+strategyClass.getName()+"can only have one default strategy");
-                }else{
+        Arrays.stream(names).forEach(name -> {
+            T object = applicationContext.getBean(name, strategyClass);
+            if (Objects.nonNull(AnnotationUtils.getAnnotation(AopUtils.getTargetClass(object), DefaultStrategy.class))) {
+                if (Objects.nonNull(defaultStrategy)) {
+                    throw new StrategyException("StrategyClass=" + strategyClass.getName() + "can only have one default strategy");
+                } else {
                     defaultStrategy = object;
                 }
             }
             List<V> identifiers = Lists.newArrayList();
             identifiers.addAll(AnnotationUtils.getRepeatableAnnotations(AopUtils.getTargetClass(object), strategyAnnotationClass));
-            if(!CollectionUtils.isEmpty(identifiers)){
-                identifiers.forEach(i->{
-                    String identifyCode = identifyCodeGetter.apply(i);
-                    if(Objects.nonNull(strategyTable.putIfAbsent(identifyCode,object))){
-                        throw new StrategyException("StrategyClass="+strategyClass.getName()+",identifyCode="+identifyCode+"exist multi config");
+            if (!CollectionUtils.isEmpty(identifiers)) {
+                identifiers.forEach(i -> {
+                    R identify = identifyGetter.apply(i);
+                    if (Objects.nonNull(strategyTable.putIfAbsent(identify, object))) {
+                        throw new StrategyException("StrategyClass=" + strategyClass.getName() + ",identify=" + identify + "exist multi config");
                     }
                 });
             }
