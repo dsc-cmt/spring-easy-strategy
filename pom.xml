@@ -4,13 +4,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.comt</groupId>
-    <artifactId>spring-strategy-tool</artifactId>
+    <groupId>io.github.cmt</groupId>
+    <artifactId>spring-easy-strategy</artifactId>
     <version>1.3.0-SNAPSHOT</version>
 
-    <name>spring-strategy-tool</name>
+    <name>spring-easy-strategy</name>
     <description>a useful framework for use strategy design pattern in spring</description>
-    <url>https://github.com/shengchaojie/spring-strategy-extend</url>
+    <url>https://github.com/dsc-cmt/spring-strategy-extend</url>
 
     <licenses>
         <license>
@@ -23,6 +23,10 @@
         <developer>
             <name>shengchaojie</name>
             <email>shengchaojie@163.com</email>
+        </developer>
+        <developer>
+            <name>jiangzihao</name>
+            <email>zihaojiang@163.com</email>
         </developer>
     </developers>
 
