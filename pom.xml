@@ -10,7 +10,7 @@
 
     <name>spring-easy-strategy</name>
     <description>a useful framework for use strategy design pattern in spring</description>
-    <url>https://github.com/dsc-cmt/spring-strategy-extend</url>
+    <url>https://github.com/dsc-cmt/spring-easy-strategy.git</url>
 
     <licenses>
         <license>
@@ -31,8 +31,8 @@
     </developers>
 
     <scm>
-        <url>https://github.com/dsc-cmt/spring-strategy-extend</url>
-        <connection>https://github.com/dsc-cmt/spring-strategy-extend.git</connection>
+        <url>https://github.com/dsc-cmt/spring-easy-strategy</url>
+        <connection>https://github.com/dsc-cmt/spring-easy-strategy.git</connection>
     </scm>
 
     <properties>
