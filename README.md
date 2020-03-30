@@ -63,7 +63,6 @@ public interface PlatformStrategy {
 public @interface Platform {
 
     PlatformEnum value();
-
 }
 ```
 
@@ -117,7 +116,7 @@ public StrategyContainerFactoryBean<PlatformStrategy, Platform, PlatformEnum> pl
 
 #### 3. 注入StrategyContainer
 
-key为identify\<R\>,value为strategyClass\<T\> 策略类
+key为identify\<R\>,value为strategyClass\<T\> 策略类
 
 ```java
 /**
@@ -297,7 +296,7 @@ List<Validation> strategies = validationMultiStrategyContainer.getStrategies("1"
     修改类名StrategyManager为StrategyContainer
     
 - 2020-03-30
-    
+  
     策略标识符identifyCode使用泛型替换 
 
 > 完整使用案例示例见test用例
