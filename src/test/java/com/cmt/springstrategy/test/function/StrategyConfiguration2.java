@@ -30,6 +30,11 @@ public class StrategyConfiguration2 {
 
     @Bean
     public StrategyContainerFactoryBean<PlatformStrategy, Platform, PlatformEnum> platformStrategyManager() {
+     /*   StrategyContainerFactoryBean<PlatformStrategy, Platform, PlatformEnum> factoryBean = new StrategyContainerFactoryBean<>();
+        factoryBean.setStrategyClass(PlatformStrategy.class);//策略接口
+        factoryBean.setStrategyAnnotationClass(Platform.class);//策略实现类标注注解
+        factoryBean.setIdentifyGetter(Platform::value);// 策略实现类标记注解到标识符的转换逻辑
+        return factoryBean;*/
         return StrategyContainerFactoryBean.build(PlatformStrategy.class, Platform.class, Platform::value);
     }
 
