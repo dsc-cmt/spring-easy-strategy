@@ -29,17 +29,17 @@ public class StrategyContainerFactoryBean<T, V extends Annotation, R> implements
     private Class<V> strategyAnnotationClass;
 
     @Setter
-    private Function<V, R> identifyCodeGetter;
+    private Function<V, R> identifyGetter;
 
     private Map<R, T> strategyTable = new HashMap<>();
 
     private T defaultStrategy;
 
-    public static <T, V extends Annotation, R> StrategyContainerFactoryBean<T, V, R> build(Class<T> strategyClass, Class<V> strategyAnnotationClass, Function<V, R> identifyCodeGetter) {
+    public static <T, V extends Annotation, R> StrategyContainerFactoryBean<T, V, R> build(Class<T> strategyClass, Class<V> strategyAnnotationClass, Function<V, R> identifyGetter) {
         StrategyContainerFactoryBean<T, V, R> factoryBean = new StrategyContainerFactoryBean<>();
         factoryBean.setStrategyClass(strategyClass);
         factoryBean.setStrategyAnnotationClass(strategyAnnotationClass);
-        factoryBean.setIdentifyCodeGetter(identifyCodeGetter);
+        factoryBean.setIdentifyGetter(identifyGetter);
         return factoryBean;
     }
 
@@ -47,7 +47,7 @@ public class StrategyContainerFactoryBean<T, V extends Annotation, R> implements
     public StrategyContainer<R, T> getObject() throws Exception {
         Assert.notNull(strategyClass, "strategyClass must not be null");
         Assert.notNull(strategyAnnotationClass, "strategyAnnotationClass must not be null");
-        Assert.notNull(identifyCodeGetter, "identifyCodeGetter must not be null");
+        Assert.notNull(identifyGetter, "identifyGetter must not be null");
 
         return new StrategyContainer<R, T>() {
             @Override
@@ -88,9 +88,9 @@ public class StrategyContainerFactoryBean<T, V extends Annotation, R> implements
             identifiers.addAll(AnnotationUtils.getRepeatableAnnotations(AopUtils.getTargetClass(object), strategyAnnotationClass));
             if (!CollectionUtils.isEmpty(identifiers)) {
                 identifiers.forEach(i -> {
-                    R identify = identifyCodeGetter.apply(i);
+                    R identify = identifyGetter.apply(i);
                     if (Objects.nonNull(strategyTable.putIfAbsent(identify, object))) {
-                        throw new StrategyException("StrategyClass=" + strategyClass.getName() + ",identifyCode=" + identify + "exist multi config");
+                        throw new StrategyException("StrategyClass=" + strategyClass.getName() + ",identify=" + identify + "exist multi config");
                     }
                 });
             }

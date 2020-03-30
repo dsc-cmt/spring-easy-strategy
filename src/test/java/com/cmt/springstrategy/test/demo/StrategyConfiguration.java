@@ -24,7 +24,7 @@ public class StrategyConfiguration {
         StrategyContainerFactoryBean<PointsRewardStrategy, StrategyIdentifier,String> factoryBean = new StrategyContainerFactoryBean<>();
         factoryBean.setStrategyClass(PointsRewardStrategy.class);
         factoryBean.setStrategyAnnotationClass(StrategyIdentifier.class);
-        factoryBean.setIdentifyCodeGetter((a)->a.identifyCode());
+        factoryBean.setIdentifyGetter((a)->a.identifyCode());
         return factoryBean;
     }
 

@@ -106,7 +106,7 @@ public class FunctionTest {
             StrategyContainerFactoryBean<RepeatableStrategy, One, String> factoryBean = new StrategyContainerFactoryBean<>();
             factoryBean.setStrategyClass(RepeatableStrategy.class);
             factoryBean.setStrategyAnnotationClass(One.class);
-            factoryBean.setIdentifyCodeGetter(a->a.test());
+            factoryBean.setIdentifyGetter(a->a.test());
             factoryBean.setApplicationContext(applicationContext);
         }catch (Exception ex){
             Assert.assertTrue(ex instanceof StrategyException);
