@@ -196,6 +196,7 @@ helloStrategyContainer.register(Joiner.on(",").join("american", GenderEnum.FEMAL
 #### 3. 单策略支持多注解  
 在业务开发中，很多场景下，对于多个identifyCode我们的策略是相同。  
 在原有自定义注解的基础上进行改造，比如原有注解如下
+
 ```java
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
@@ -285,12 +286,10 @@ List<Validation> strategies = validationMultiStrategyContainer.getStrategies("1"
 ```
 
 ## 更新
-- 2020-03-30
-
+- 2020-03-30  
     策略标识符identifyCode使用泛型替换
 
-- 2019-09-19
-    
+- 2019-09-19  
     支持多策略模式
     
 - 2019-09-10  
