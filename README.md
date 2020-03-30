@@ -33,7 +33,7 @@ price = strategy.calculate(...)
 ## 引入
 ```
 <dependency>
-  <groupId>com.cmt</groupId>
+  <groupId>io.github.dsc-cmt</groupId>
   <artifactId>spring-strategy-tool</artifactId>
   <version>1.3.0-SNAPSHOT</version>
 </dependency>
