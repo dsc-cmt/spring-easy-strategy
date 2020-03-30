@@ -64,6 +64,10 @@ public @interface Platform {
 
     PlatformEnum value();
 }
+
+public enum PlatformEnum {
+    ALI, TENCENT, BAI_DU
+}
 ```
 
 > 注意@Component元注解
