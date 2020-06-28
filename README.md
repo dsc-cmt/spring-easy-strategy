@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/dsc-cmt/spring-strategy-extend.svg?branch=master)](https://travis-ci.org/dsc-cmt/spring-strategy-extend)
+[![Build Status](https://travis-ci.com/dsc-cmt/spring-easy-strategy.svg?branch=master)](https://travis-ci.com/dsc-cmt/spring-easy-strategy)
 > 运行环境需要java8
 
 ## 介绍
