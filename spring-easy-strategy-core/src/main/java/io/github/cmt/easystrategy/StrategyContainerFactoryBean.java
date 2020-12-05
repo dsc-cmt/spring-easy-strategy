@@ -26,17 +26,26 @@ import java.util.function.Function;
 public class StrategyContainerFactoryBean<T, V extends Annotation, R> implements FactoryBean<StrategyContainer<R, T>>, ApplicationContextAware {
 
     @Setter
-    private Class<T> strategyClass;
+    protected Class<T> strategyClass;
 
     @Setter
-    private Class<V> strategyAnnotationClass;
+    protected Class<V> strategyAnnotationClass;
 
     @Setter
-    private Function<V, R> identifierGetter;
+    protected Function<V, R> identifierGetter;
 
-    private Map<R, T> strategyTable = new HashMap<>();
+    protected Map<R, T> strategyTable = new HashMap<>();
 
     private T defaultStrategy;
+
+    public StrategyContainerFactoryBean() {
+    }
+
+    public StrategyContainerFactoryBean(Class<T> strategyClass, Class<V> strategyAnnotationClass, Function<V, R> identifierGetter) {
+        this.strategyClass = strategyClass;
+        this.strategyAnnotationClass = strategyAnnotationClass;
+        this.identifierGetter = identifierGetter;
+    }
 
     public static <T, V extends Annotation, R> StrategyContainerFactoryBean<T, V, R> build(Class<T> strategyClass, Class<V> strategyAnnotationClass, Function<V, R> identifyGetter) {
         StrategyContainerFactoryBean<T, V, R> factoryBean = new StrategyContainerFactoryBean<>();
@@ -55,7 +64,7 @@ public class StrategyContainerFactoryBean<T, V extends Annotation, R> implements
         return new StrategyContainer<R, T>() {
             @Override
             public T getStrategy(R identify) {
-                return Optional.ofNullable(strategyTable.get(identify)).orElse(defaultStrategy);
+                return getStrategyFromContainer(identify);
             }
 
             @Override
@@ -63,6 +72,19 @@ public class StrategyContainerFactoryBean<T, V extends Annotation, R> implements
                 strategyTable.put(identify, strategy);
             }
         };
+    }
+
+    /**
+     * 抽象通过identify获取策略逻辑
+     *
+     * 如果有自定义获取逻辑
+     * 可以进行重载
+     * 比如类似cola extension的逻辑
+     * @param identify
+     * @return
+     */
+    protected T getStrategyFromContainer(R identify){
+        return Optional.ofNullable(strategyTable.get(identify)).orElse(defaultStrategy);
     }
 
     @Override
