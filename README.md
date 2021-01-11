@@ -35,7 +35,7 @@ price = strategy.calculate(...)
 <dependency>
   <groupId>io.github.dsc-cmt</groupId>
   <artifactId>spring-strategy-tool</artifactId>
-  <version>1.3.0-SNAPSHOT</version>
+  <version>1.4.0</version>
 </dependency>
 ```
 
@@ -153,7 +153,7 @@ platformStrategy.hello()
 <dependency>
     <groupId>io.github.dsc-cmt</groupId>
     <artifactId>spring-easy-strategy-starter</artifactId>
-    <version>1.0.0</version>
+    <version>1.4.0</version>
 </dependency>
 ```
 
