@@ -142,6 +142,29 @@ platformStrategy.hello()
 
 ### 进阶功能
 
+#### 0. 减免配置(SpringBootStarter)
+考虑到现在使用方式上的繁琐以及使用策略模式大部分的场景都为简单场景(一个策略标识符对应一个策略实现)，因此针对SpringBoot开发了Starter
+
+使用这个Starter存在一个约束，**策略注解必须使用内置的@StrategyIdentifier**，如果你的策略模式比较复杂，只能自己去配置
+
+使用方式很简单，引入starter包
+
+```
+<dependency>
+    <groupId>io.github.dsc-cmt</groupId>
+    <artifactId>spring-easy-strategy-starter</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
+
+配置策略接口以及对应实现后，注入Container即可
+
+```
+@EasyStrategy
+StrategyContainer<StrategyI> strategyContainerSample;
+```
+
+
 #### 1. 多个属性匹配策略
 
 使用String作为identify，使用时将多个属性通过一定规则拼接成String来匹配策略
