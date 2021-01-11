@@ -309,6 +309,10 @@ List<Validation> strategies = validationMultiStrategyContainer.getStrategies("1"
 ```
 
 ## 更新
+
+- 2021-01-11  
+    增加starter
+  
 - 2020-03-30  
     策略标识符identifyCode使用泛型替换
 
