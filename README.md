@@ -32,10 +32,11 @@ price = strategy.calculate(...)
 
 ## 引入
 ```
+<!-- https://mvnrepository.com/artifact/io.github.dsc-cmt/spring-easy-strategy -->
 <dependency>
-  <groupId>io.github.dsc-cmt</groupId>
-  <artifactId>spring-strategy-tool</artifactId>
-  <version>1.4.0</version>
+    <groupId>io.github.dsc-cmt</groupId>
+    <artifactId>spring-easy-strategy</artifactId>
+    <version>1.4.0</version>
 </dependency>
 ```
 
