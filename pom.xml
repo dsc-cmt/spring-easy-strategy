@@ -41,7 +41,7 @@
     </scm>
 
     <properties>
-        <spring.version>5.0.10.RELEASE</spring.version>
+        <spring.version>5.2.24.RELEASE</spring.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.compilerVersion>1.8</maven.compiler.compilerVersion>
